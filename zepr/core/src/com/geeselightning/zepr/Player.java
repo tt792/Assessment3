@@ -18,6 +18,13 @@ public class Player extends Character {
     float speedMult;
     String playertype;
     public boolean isImmune;
+    private int points;
+    public int getPoints() {
+    	return points;
+    }
+    public void addPoints(int givenPoints) {
+    	points = givenPoints;
+    }
 
 
     private Player(Sprite sprite, Vector2 playerSpawn) {

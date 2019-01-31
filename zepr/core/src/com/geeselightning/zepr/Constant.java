@@ -14,6 +14,7 @@ public final class Constant {
     public static final int ZOMBIEDMG = 10;
     public static final int ZOMBIERANGE = 20;
     public static final float ZOMBIEHITCOOLDOWN = 1;
+    public static final int ZOMBIEPOINTS = 10;
     public static final float NERDYHPMULT = 1.5f;
     public static final float NERDYDMGMULT = 1;
     public static final float NERDYSPEEDMULT = 1;

@@ -41,6 +41,7 @@ public class Zombie extends Character {
             currentLevel.zombiesRemaining--;
             currentLevel.aliveZombies.remove(this);
             this.getTexture().dispose();
+            player.addPoints(Constant.ZOMBIEPOINTS);
         }
     }
 }

@@ -86,7 +86,7 @@ public class Level implements Screen {
      */
     public void gameOver() {
         isPaused = true;
-        parent.setScreen(new TextScreen(parent, "You died."));
+        parent.setScreen(new TextScreen(parent, "You died. \n You had " + player.getPoints() + " points"));
     }
 
 
