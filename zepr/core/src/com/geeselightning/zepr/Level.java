@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class Level implements Screen {
@@ -47,6 +48,7 @@ public class Level implements Screen {
 
     Label progressLabel = new Label("", skin);
     Label healthLabel = new Label("", skin);
+    Label pointsLabel = new Label("", skin);
     Label powerupLabel = new Label("", skin);
 
     public Level(Zepr zepr, String mapLocation, Vector2 playerSpawn, ArrayList<Vector2> zombieSpawnPoints, int[] waves, Vector2 powerSpawn) {
@@ -117,11 +119,19 @@ public class Level implements Screen {
      */
     public int spawnZombies(int amount, ArrayList<Vector2> spawnPoints) {
         int notSpawned = 0;
-
         for (int i = 0; i < amount; i++) {
-
-            Zombie zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
-                    spawnPoints.get(i % spawnPoints.size()), this));
+        	Zombie zombie;
+        	Random rand = new Random();
+        	int n = rand.nextInt(1000);
+        	
+        	if (n <= Constant.SPECIALCHANCE) {
+        		zombie = (new Zombie(new Sprite(new Texture("zombie02.png")),
+                        spawnPoints.get(i % spawnPoints.size()), this, Constant.SPECIALDMG, Constant.SPECIALRANGE));
+        	}
+        	else {
+        		zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
+                        spawnPoints.get(i % spawnPoints.size()), this, Constant.ZOMBIEDMG, Constant.ZOMBIERANGE));
+        	}
 
             // Check there isn't already a zombie there, or they will be stuck
             boolean collides = false;
@@ -339,14 +349,18 @@ public class Level implements Screen {
 
             String progressString = ("Wave " + Integer.toString(currentWave) + ", " + Integer.toString(zombiesRemaining) + " zombies remaining.");
             String healthString = ("Health: " + Integer.toString(player.health) + "HP");
+            String pointsString = ("Points:" + Integer.toString(player.getPoints()) + " points");
 
             progressLabel.setText(progressString);
             healthLabel.setText(healthString);
+            pointsLabel.setText(pointsString);
 
             table.top().left();
             table.add(progressLabel).pad(10);
             table.row().pad(10);
             table.add(healthLabel).pad(10).left();
+            table.row();
+            table.add(pointsLabel).pad(10).left();
             table.row();
             table.add(powerupLabel);
             stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));

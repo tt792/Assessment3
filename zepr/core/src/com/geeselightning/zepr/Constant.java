@@ -25,4 +25,7 @@ public final class Constant {
     public static final int SPEEDUP = 50;
     public static final float SPEEDUPTIME = 10;
     public static final float IMMUNITYTIME = 5;
+    public static final int SPECIALCHANCE = 100;
+    public static final int SPECIALDMG = 20;
+    public static final int SPECIALRANGE = 15;
 }

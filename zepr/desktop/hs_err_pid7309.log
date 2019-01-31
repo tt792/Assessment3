@@ -1,0 +1,34 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007ffb3313b99b, pid=7309, tid=7346
+#
+# JRE version: OpenJDK Runtime Environment (10.0.2+13) (build 10.0.2+13-Ubuntu-1ubuntu0.18.04.4)
+# Java VM: OpenJDK 64-Bit Server VM (10.0.2+13-Ubuntu-1ubuntu0.18.04.4, mixed mode, tiered, compressed oops, g1 gc, linux-amd64)
+# Problematic frame:
+# C  [libc.so.6+0x9099b]
+[timeout occurred during error reporting in step "printing problematic frame"] after 30 s.
+# Core dump will be written. Default location: Core dumps may be processed with "/usr/share/apport/apport %p %s %c %d %P" (or dumping to /home/matthew/Documents/CS/SEPR/Game/Assessment3/zepr/desktop/core.7309)
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -Dfile.encoding=UTF-8 com.geeselightning.zepr.desktop.DesktopLauncher
+
+Host: Intel(R) Core(TM) i7-5500U CPU @ 2.40GHz, 
+[timeout occurred during error reporting in step "printing summary machine and OS info"] after 30 s.
+Time: Thu Jan 31 10:52:43 2019 GMT elapsed time: 102 seconds (0d 0h 1m 42s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007ffb2c60f000):  JavaThread "LWJGL Application" [_thread_in_native, id=7346, stack(0x00007ffaa443c000,0x00007ffaa453d000)]
+
+Stack: [0x00007ffaa443c000,0x00007ffaa453d000],  sp=0x00007ffaa453af60,  free space=1019k
+Native frames: (J=compiled Java code, A=aot compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [libc.so.6+0x9099b]
+------ Timeout during error reporting after 120 s. ------
