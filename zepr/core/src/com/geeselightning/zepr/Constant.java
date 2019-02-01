@@ -26,6 +26,13 @@ public final class Constant {
     public static final float SPEEDUPTIME = 10;
     public static final float IMMUNITYTIME = 5;
     public static final int SPECIALCHANCE = 100;
-    public static final int SPECIALDMG = 20;
-    public static final int SPECIALRANGE = 15;
+    public static final int FASTDMG = 5;
+    public static final int FASTRANGE = 30;
+    public static final int FASTSPEED = 120;
+    public static final float FASTCOOLDOWN = 0.75f;
+    public static final int TANKDMG = 30;
+    public static final int TANKRANGE = 15;
+    public static final int TANKSPEED = 60;
+    public static final float TANKCOOLDOWN = 1.5f;
+    
 }

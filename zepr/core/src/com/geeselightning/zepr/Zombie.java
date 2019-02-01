@@ -6,16 +6,17 @@ import com.badlogic.gdx.math.Vector2;
 public class Zombie extends Character {
 
     private Player player = Player.getInstance();
-    public final float hitCooldown = Constant.ZOMBIEHITCOOLDOWN;
+    float hitCooldown;
     int attackDamage;
     public int hitRange;
 
-    public Zombie(Sprite sprite, Vector2 zombieSpawn, Level currentLevel, int attackDamage, int hitRange) {
+    public Zombie(Sprite sprite, Vector2 zombieSpawn, Level currentLevel, int attackDamage, int hitRange, float speed, float hitCooldown) {
         super(sprite, zombieSpawn, currentLevel);
         this.attackDamage = attackDamage;
         this.hitRange = hitRange;
-        this.speed = Constant.ZOMBIESPEED;
+        this.speed = speed;
         this.health = Constant.ZOMBIEMAXHP;
+        this.hitCooldown = hitCooldown;
     }
 
     public void attack(Player player, float delta) {
