@@ -47,6 +47,7 @@ public class Player extends Character {
     public void attack(Zombie zombie, float delta) {
         if (canHitGlobal(zombie, hitRange) && hitRefresh > hitCooldown) {
             zombie.takeDamage(attackDamage);
+            zombie.hit();
             hitRefresh = 0;
         } else {
             hitRefresh += delta;
@@ -66,6 +67,11 @@ public class Player extends Character {
             HPMult = Constant.SPORTYHPMULT;
             speedMult = Constant.SPORTYSPEEDMULT;
         }
+        else if (playertype == "arty"){
+            dmgMult = Constant.ARTYDMGMULT;
+            HPMult = Constant.ARTYHPMULT;
+            speedMult = Constant.ARTYSPEEDMULT;
+        }
         else if (playertype == null){
             dmgMult =1;
             HPMult = 1;
@@ -80,11 +86,15 @@ public class Player extends Character {
             mainTexture = new Texture("player01.png");
             attackTexture = new Texture("player01_attack.png");
             this.setTexture(mainTexture);
-        } else {
+        } else if (playertype == "sporty") {
             // playertype == sporty
             mainTexture = new Texture("player02.png");
             attackTexture = new Texture("player02_attack.png");
             this.setTexture(mainTexture);
+        } else if (playertype == "arty") {
+        	mainTexture = new Texture("player03.png");
+        	attackTexture = new Texture("player03_attack.png");
+        	this.setTexture(mainTexture);
         }
     }
 
@@ -110,6 +120,8 @@ public class Player extends Character {
         //if (hitRefresh > 0.1 && getTexture() == attackTexture) {
             this.setTexture(mainTexture);
         }
+        
+        
     }
 
     @Override
