@@ -121,25 +121,16 @@ public class Level implements Screen {
         int notSpawned = 0;
         for (int i = 0; i < amount; i++) {
         	Zombie zombie;
-        	
-        	//Create a new RNG
         	Random rand = new Random();
         	int n = rand.nextInt(1000);
         	
-        	//If the random number is less than the chance to spawn a special zombie
         	if (n <= Constant.SPECIALCHANCE) {
-        		int m = rand.nextInt(2);
-        		
-        		if(m == 1) //Create a fast zombie
-        			zombie = (new Zombie(new Sprite(new Texture("zombie02.png")),
-        					spawnPoints.get(i % spawnPoints.size()), this, Constant.FASTDMG, Constant.FASTRANGE, Constant.FASTSPEED, Constant.FASTCOOLDOWN));
-        		else //Create a tank zombie
-        			zombie = (new Zombie(new Sprite(new Texture("zombie03.png")),
-        					spawnPoints.get(i % spawnPoints.size()), this, Constant.TANKDMG, Constant.TANKRANGE, Constant.TANKSPEED, Constant.TANKCOOLDOWN));
+        		zombie = (new Zombie(new Sprite(new Texture("zombie02.png")),
+                        spawnPoints.get(i % spawnPoints.size()), this, Constant.SPECIALDMG, Constant.SPECIALRANGE));
         	}
         	else {
         		zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
-                        spawnPoints.get(i % spawnPoints.size()), this, Constant.ZOMBIEDMG, Constant.ZOMBIERANGE, Constant.ZOMBIESPEED, Constant.ZOMBIEHITCOOLDOWN));
+                        spawnPoints.get(i % spawnPoints.size()), this, Constant.ZOMBIEDMG, Constant.ZOMBIERANGE));
         	}
 
             // Check there isn't already a zombie there, or they will be stuck
