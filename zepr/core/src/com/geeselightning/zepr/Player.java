@@ -47,6 +47,7 @@ public class Player extends Character {
     public void attack(Zombie zombie, float delta) {
         if (canHitGlobal(zombie, hitRange) && hitRefresh > hitCooldown) {
             zombie.takeDamage(attackDamage);
+            zombie.hit();
             hitRefresh = 0;
         } else {
             hitRefresh += delta;

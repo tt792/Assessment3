@@ -1,5 +1,6 @@
 package com.geeselightning.zepr;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
@@ -9,6 +10,8 @@ public class Zombie extends Character {
     float hitCooldown;
     int attackDamage;
     public int hitRange;
+    
+    boolean hit = false;
 
     public Zombie(Sprite sprite, Vector2 zombieSpawn, Level currentLevel, int attackDamage, int hitRange, float speed, float hitCooldown) {
         super(sprite, zombieSpawn, currentLevel);
@@ -27,16 +30,25 @@ public class Zombie extends Character {
             hitRefresh += delta;
         }
     }
+    
+    public void hit() {
+    	hit = true;
+    }
 
     @Override
     public void update(float delta) {
         //move according to velocity
         super.update(delta);
-
+       
         // update velocity to move towards player
         // Vector2.scl scales the vector
-        velocity = getDirNormVector(player.getCenter()).scl(speed);
-
+        if (!hit)
+        	velocity = getDirNormVector(player.getCenter()).scl(speed);
+        else {
+        	velocity = getDirNormVector(player.getCenter()).scl(-(speed * 20));
+        	hit = false;
+        }
+        
         // update direction to face the player
         direction = getDirectionTo(player.getCenter());
 

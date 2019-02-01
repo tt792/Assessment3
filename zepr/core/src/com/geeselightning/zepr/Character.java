@@ -25,7 +25,7 @@ public class Character extends Sprite {
         setY(spawn.y);
         this.currentLevel = currentLevel;
     }
-
+    
     public double getDirection() {
         return direction;
     }
