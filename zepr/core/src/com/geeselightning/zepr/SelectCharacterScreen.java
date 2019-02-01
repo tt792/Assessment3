@@ -12,18 +12,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.graphics.Color;
 
-public class SelectLevelScreen implements Screen {
+public class SelectCharacterScreen implements Screen {
 
     private Zepr parent;
     private Stage stage;
-    private Label stageDescription;
-    private Label characterDescription;
-    private int stageLink = -1;
+    //private Label stageDescription;
+    private String currentStage = "Stage 1";
+    //private Label characterDescription;
+    //private int stageLink = -1;
     private boolean playerSet = false;
     Player player = Player.getInstance();
 
-    public SelectLevelScreen(Zepr zepr) {
+    public SelectCharacterScreen(Zepr zepr) {
 
         parent = zepr;
 
@@ -38,85 +40,77 @@ public class SelectLevelScreen implements Screen {
 
         // Importing the necessary assets for the button textures.
         Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
+        
+        
+        
+        
+        
 
         // Creating stage buttons.
-        final TextButton town = new TextButton("Town", skin);
-        //TextButton halifax = new TextButton("Halifax", skin);
-        //TextButton courtyard = new TextButton("Courtyard", skin);
+        //final TextButton town = new TextButton("Town", skin);
+        
+        
+        
+        
+        
 
         // Creating character buttons.
-        TextButton nerdy = new TextButton("Nerdy",skin);
-        TextButton sporty = new TextButton("Sporty",skin);
-        TextButton arty = new TextButton("Arty",skin);
+        TextButton nerdy = new TextButton("Nerd",skin);
+        TextButton jock = new TextButton("Jock",skin);
+        
+        
 
         // Creating other buttons.
-        TextButton play = new TextButton("Play", skin);
-        TextButton save = new TextButton("Save", skin);
+        TextButton play = new TextButton("Start game!", skin);
         TextButton load = new TextButton("Load", skin);
-        TextButton back = new TextButton("Back", skin);
+        TextButton back = new TextButton("<-", skin);
 
-        // Creating stage descriptions.
-        Label title = new Label("Choose a stage and character.", skin, "subtitle");
-        final String townDescription = "You wake up hungover in town to discover there is a zombie apocalypse."; //change to fit the new method
-        //final String halifaxDescription = "You need to get your laptop with the work on it from your accomodation.";
-        //final String courtyardDescription = "You should go to Courtyard and get some breakfast.";
-        //final String lockedDescription = "This stage is locked until you complete the previous one.";
-        final String defaultDescription ="Select a stage from the buttons above.";
-        stageDescription = new Label(defaultDescription, skin);
-        stageDescription.setWrap(true);
-        stageDescription.setWidth(100);
-        stageDescription.setAlignment(Align.center);
+        // Creating current stage label.
+        Label currentStageLabel = new Label("Current stage: " + currentStage, skin, "subtitle");
 
-        // Creating character descriptions.
-        final String nerdyDescription = "Construct a mech suit for yourself so you can take more hits.";
-        final String sportyDescripton = "Work out so you run faster.";
-        final String artyDescription = "Creation flows through you";
-        final String defaultCharacterDescription = "Select a type of student from the buttons above.";
-        characterDescription = new Label(defaultCharacterDescription,skin);
-        characterDescription.setWrap(true);
-        characterDescription.setWidth(100);
-        characterDescription.setAlignment(Align.center);
-
-        // Adding menu bar.
+        // Adding menu bar for the 'other buttons' and current stage label.
         Table menuBar = new Table();
         menuBar.setFillParent(true);
-        // menuBar.setDebug(true); // Adds borders for the table.
+        
+        menuBar.setDebug(true); // Adds borders for the table.
         stage.addActor(menuBar);
 
-        menuBar.top().left();
-        menuBar.row();
-        menuBar.add(back).pad(10);
-        menuBar.add(save).pad(10);
-        menuBar.add(load).pad(10);
+        menuBar.top();
+        //menuBar.row();
+        menuBar.add(back).pad(5);
+        menuBar.add(load).pad(5);
+        menuBar.add(currentStageLabel).pad(5).right();
 
         // Adding stage selector buttons.
         Table stageSelect = new Table();
         stageSelect.setFillParent(true);
-        // stageSelect.setDebug(true); // Adds borders for the table.
+        
+        stageSelect.setDebug(true); // Adds borders for the table.
         stage.addActor(stageSelect);
 
-        stageSelect.center();
+        stageSelect.right();
 
-        stageSelect.row();
-        stageSelect.add(title).colspan(3);
+        //stageSelect.row();
 
-        stageSelect.row().pad(50,0,100,0);
-        stageSelect.add(town).pad(10).colspan(3);
+        //stageSelect.row().pad(50,0,100,0);
+        //stageSelect.add(town).pad(10);
+        
+        
         //removed the other stage buttons
         //stageSelect.add(halifax).pad(10);
         //stageSelect.add(courtyard).pad(10);
+        //stageSelect.row();
+        //stageSelect.add(stageDescription).width(1000f).colspan(3);
 
-        stageSelect.row();
-        stageSelect.add(stageDescription).width(1000f).colspan(3);
-
+        
+        
         // Adding select character Buttons
-        stageSelect.row().center();
-        stageSelect.add(nerdy).pad(10);
-        stageSelect.add(sporty).pad(10);
-        stageSelect.add(arty).pad(10);
+        stageSelect.row().right();
+        stageSelect.add(nerdy);
+        stageSelect.add(jock);
 
-        stageSelect.row().center();
-        stageSelect.add(characterDescription).width(1000f).colspan(3);
+        //stageSelect.row().right();
+        //stageSelect.add(characterDescription).width(500f).colspan(3);
 
         // Adding play button at the bottom.
         Table bottomTable = new Table();
@@ -137,7 +131,7 @@ public class SelectLevelScreen implements Screen {
             }
         });
 
-        // Defining actions for the town button.
+        /* Defining actions for the town button.
         town.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -145,6 +139,8 @@ public class SelectLevelScreen implements Screen {
                 stageLink = Zepr.TOWN;
             }
         });
+        
+        */
         
         //removed the other buttons from the game
         /*
@@ -182,34 +178,26 @@ public class SelectLevelScreen implements Screen {
         nerdy.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                characterDescription.setText(nerdyDescription);
+                //characterDescription.setText(nerdyDescription);
                 player.setType("nerdy");
                 playerSet = true;
             }
         });
-        sporty.addListener(new ChangeListener() {
+        jock.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                characterDescription.setText(sportyDescripton);
-                player.setType("sporty");
+                //characterDescription.setText(jockDescripton);
+                player.setType("jock");
                 playerSet = true;
             }
         });
-        arty.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                characterDescription.setText(artyDescription);
-                player.setType("arty");
-                playerSet = true;
-            }
-        });
-        
+
         // Defining actions for the play button.
         play.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if ((stageLink != -1) && (playerSet == true)) {
-                    parent.changeScreen(stageLink);
+                if (playerSet == true) {
+                    parent.changeScreen(Zepr.TOWN);
                 }
             }
         });

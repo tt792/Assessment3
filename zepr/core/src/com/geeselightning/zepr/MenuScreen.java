@@ -17,6 +17,7 @@ public class MenuScreen implements Screen {
     private Zepr parent;
     private Stage stage;
     private Label titleLabel;
+    private Label titleCaption;
 
     public MenuScreen(Zepr zepr) {
         // Constructor builds the gui of the menu screen.
@@ -43,13 +44,17 @@ public class MenuScreen implements Screen {
 
         // Creating a title.
         titleLabel = new Label( "Zombie Engineering Project", skin, "subtitle");
-
+        titleCaption = new Label("(under new management)", skin, "subtitle");
+        titleCaption.setFontScale(0.5f);
+       
         // Creating buttons.
         TextButton start = new TextButton("Start", skin);
         TextButton exit = new TextButton("Exit", skin);
 
         // Adding content to the table (screen).
         table.add(titleLabel);
+        table.row().pad(10, 40, 10, 40);
+        table.add(titleCaption);
         table.row().pad(10, 40, 10, 40);
         table.add(start).fillX().uniformX();
         table.row().pad(10, 40, 10, 40);
