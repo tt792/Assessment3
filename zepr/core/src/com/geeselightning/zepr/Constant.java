@@ -18,8 +18,11 @@ public final class Constant {
     public static final float NERDYHPMULT = 1.5f;
     public static final float NERDYDMGMULT = 1;
     public static final float NERDYSPEEDMULT = 1;
+    public static final float ARTYHPMULT = 1.25f;
+    public static final float ARTYDMGMULT = 1.25f;
+    public static final float ARTYSPEEDMULT = 1.25f;
     public static final float SPORTYHPMULT = 1;
-    public static final float SPORTYDMGMULT = 1;
+    public static final float SPORTYDMGMULT = 1.5f;
     public static final float SPORTYSPEEDMULT = 1.5f;
     public static final int HEALUP = 30;
     public static final int SPEEDUP = 50;

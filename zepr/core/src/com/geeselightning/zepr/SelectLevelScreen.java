@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.graphics.Color;
 
 public class SelectLevelScreen implements Screen {
 
@@ -48,6 +47,7 @@ public class SelectLevelScreen implements Screen {
         // Creating character buttons.
         TextButton nerdy = new TextButton("Nerdy",skin);
         TextButton sporty = new TextButton("Sporty",skin);
+        TextButton arty = new TextButton("Arty",skin);
 
         // Creating other buttons.
         TextButton play = new TextButton("Play", skin);
@@ -57,10 +57,10 @@ public class SelectLevelScreen implements Screen {
 
         // Creating stage descriptions.
         Label title = new Label("Choose a stage and character.", skin, "subtitle");
-        final String townDescription = "You wake up hungover in town to discover there is a zombie apocalypse.";
+        final String townDescription = "You wake up hungover in town to discover there is a zombie apocalypse."; //change to fit the new method
         //final String halifaxDescription = "You need to get your laptop with the work on it from your accomodation.";
         //final String courtyardDescription = "You should go to Courtyard and get some breakfast.";
-        final String lockedDescription = "This stage is locked until you complete the previous one.";
+        //final String lockedDescription = "This stage is locked until you complete the previous one.";
         final String defaultDescription ="Select a stage from the buttons above.";
         stageDescription = new Label(defaultDescription, skin);
         stageDescription.setWrap(true);
@@ -70,6 +70,7 @@ public class SelectLevelScreen implements Screen {
         // Creating character descriptions.
         final String nerdyDescription = "Construct a mech suit for yourself so you can take more hits.";
         final String sportyDescripton = "Work out so you run faster.";
+        final String artyDescription = "Creation flows through you";
         final String defaultCharacterDescription = "Select a type of student from the buttons above.";
         characterDescription = new Label(defaultCharacterDescription,skin);
         characterDescription.setWrap(true);
@@ -100,7 +101,7 @@ public class SelectLevelScreen implements Screen {
         stageSelect.add(title).colspan(3);
 
         stageSelect.row().pad(50,0,100,0);
-        stageSelect.add(town).pad(10);
+        stageSelect.add(town).pad(10).colspan(3);
         //removed the other stage buttons
         //stageSelect.add(halifax).pad(10);
         //stageSelect.add(courtyard).pad(10);
@@ -112,6 +113,7 @@ public class SelectLevelScreen implements Screen {
         stageSelect.row().center();
         stageSelect.add(nerdy).pad(10);
         stageSelect.add(sporty).pad(10);
+        stageSelect.add(arty).pad(10);
 
         stageSelect.row().center();
         stageSelect.add(characterDescription).width(1000f).colspan(3);
@@ -193,7 +195,15 @@ public class SelectLevelScreen implements Screen {
                 playerSet = true;
             }
         });
-
+        arty.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                characterDescription.setText(artyDescription);
+                player.setType("arty");
+                playerSet = true;
+            }
+        });
+        
         // Defining actions for the play button.
         play.addListener(new ChangeListener() {
             @Override
