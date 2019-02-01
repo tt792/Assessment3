@@ -136,12 +136,12 @@ public class Character extends Sprite {
 
         // List of all corners of sprite
         ArrayList<Vector2> spriteVertices = new ArrayList<Vector2>(Arrays.asList(new Vector2(getX(), getY()),
-                new Vector2(getX() + getWidth(), getY()), new Vector2(getX(), getY() + getHeight()),
+                new Vector2(getX() + getWidth() - 5, getY()), new Vector2(getX(), getY() + getHeight() - 5),
                 new Vector2(getX() + getWidth(), getY() + getHeight())));
 
         // Make sure non of the corners goto a blocked region of the map
         for (Vector2 vertex : spriteVertices) {
-            if (currentLevel.isBlocked(vertex.x, vertex.y)) {
+            if (currentLevel.isBlocked(vertex.x, vertex.y)) { //change so that it checks just inside the sprite
                 setX(oldX);
                 setY(oldY);
             }

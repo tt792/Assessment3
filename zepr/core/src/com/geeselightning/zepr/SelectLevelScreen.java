@@ -42,8 +42,8 @@ public class SelectLevelScreen implements Screen {
 
         // Creating stage buttons.
         final TextButton town = new TextButton("Town", skin);
-        TextButton halifax = new TextButton("Halifax", skin);
-        TextButton courtyard = new TextButton("Courtyard", skin);
+        //TextButton halifax = new TextButton("Halifax", skin);
+        //TextButton courtyard = new TextButton("Courtyard", skin);
 
         // Creating character buttons.
         TextButton nerdy = new TextButton("Nerdy",skin);
@@ -58,8 +58,8 @@ public class SelectLevelScreen implements Screen {
         // Creating stage descriptions.
         Label title = new Label("Choose a stage and character.", skin, "subtitle");
         final String townDescription = "You wake up hungover in town to discover there is a zombie apocalypse.";
-        final String halifaxDescription = "You need to get your laptop with the work on it from your accomodation.";
-        final String courtyardDescription = "You should go to Courtyard and get some breakfast.";
+        //final String halifaxDescription = "You need to get your laptop with the work on it from your accomodation.";
+        //final String courtyardDescription = "You should go to Courtyard and get some breakfast.";
         final String lockedDescription = "This stage is locked until you complete the previous one.";
         final String defaultDescription ="Select a stage from the buttons above.";
         stageDescription = new Label(defaultDescription, skin);
@@ -101,8 +101,9 @@ public class SelectLevelScreen implements Screen {
 
         stageSelect.row().pad(50,0,100,0);
         stageSelect.add(town).pad(10);
-        stageSelect.add(halifax).pad(10);
-        stageSelect.add(courtyard).pad(10);
+        //removed the other stage buttons
+        //stageSelect.add(halifax).pad(10);
+        //stageSelect.add(courtyard).pad(10);
 
         stageSelect.row();
         stageSelect.add(stageDescription).width(1000f).colspan(3);
@@ -142,7 +143,9 @@ public class SelectLevelScreen implements Screen {
                 stageLink = Zepr.TOWN;
             }
         });
-
+        
+        //removed the other buttons from the game
+        /*
         if (parent.progress <= parent.TOWN) {
             halifax.setColor(Color.DARK_GRAY);
             halifax.getLabel().setColor(Color.DARK_GRAY);
@@ -156,7 +159,7 @@ public class SelectLevelScreen implements Screen {
                 }
             });
         }
-
+		
         if (parent.progress <= parent.HALIFAX) {
             courtyard.setColor(Color.DARK_GRAY);
             courtyard.getLabel().setColor(Color.DARK_GRAY);
@@ -170,7 +173,8 @@ public class SelectLevelScreen implements Screen {
                 }
             });
         }
-
+		*/
+        
         //Defining actions for the nerdy button.
 
         nerdy.addListener(new ChangeListener() {
