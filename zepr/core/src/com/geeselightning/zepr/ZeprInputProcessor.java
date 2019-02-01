@@ -62,6 +62,8 @@ public class ZeprInputProcessor implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+    	player.attack = true;
+    	mousePosition.set(Gdx.input.getX(), Gdx.input.getY());
         return false;
     }
 
