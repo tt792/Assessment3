@@ -19,11 +19,12 @@ public class Player extends Character {
     String playertype;
     public boolean isImmune;
     private int points;
+    
     public int getPoints() {
     	return points;
     }
     public void addPoints(int givenPoints) {
-    	points = givenPoints;
+    	points += givenPoints;
     }
 
 

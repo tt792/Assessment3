@@ -42,6 +42,7 @@ public class Level implements Screen {
     protected int zombiesRemaining; // the number of zombies left to kill to complete the wave
     private int zombiesToSpawn; // the number of zombies that are left to be spawned this wave
     private boolean pauseButton = false;
+    private boolean bossSpawned = false;
     Texture blank;
     Vector2 powerSpawn;
     PowerUp currentPowerUp = null;
@@ -78,9 +79,7 @@ public class Level implements Screen {
     /**
      * Called once the stage is complete to update the game progress
      */
-    protected void complete() {
-        // implemented in subclasses
-    }
+    protected void complete() {}
 
 
     /**
@@ -126,22 +125,30 @@ public class Level implements Screen {
         	Random rand = new Random();
         	int n = rand.nextInt(1000);
         	
+        	//See if its a boss wave yet
+        	if (currentWave == 3 && !bossSpawned) {
+        		zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
+        				spawnPoints.get(i % spawnPoints.size()), this, Constant.BOSS1DMG, Constant.BOSS1RANGE, Constant.BOSSPOINTS, Constant.BOSS1MAXHP Constant.BOSS1SPEED, Constant.BOSS1COOLDOWN));
+        		bossSpawned = true;
+        		zombie.scale(2);
+        	}
+        	
         	//If the random number is less than the chance to spawn a special zombie
-        	if (n <= Constant.SPECIALCHANCE) {
+        	else if (n <= Constant.SPECIALCHANCE) {
         		int m = rand.nextInt(2);
         		
         		if(m == 1) //Create a fast zombie
         			zombie = (new Zombie(new Sprite(new Texture("zombie02.png")),
-        					spawnPoints.get(i % spawnPoints.size()), this, Constant.FASTDMG, Constant.FASTRANGE, Constant.FASTSPEED, Constant.FASTCOOLDOWN));
+        					spawnPoints.get(i % spawnPoints.size()), this, Constant.FASTDMG, Constant.FASTRANGE, Constant.SPECIALPOINTS, Constant.FASTMAXHP, Constant.FASTSPEED, Constant.FASTCOOLDOWN));
         		else //Create a tank zombie
         			zombie = (new Zombie(new Sprite(new Texture("zombie03.png")),
-        					spawnPoints.get(i % spawnPoints.size()), this, Constant.TANKDMG, Constant.TANKRANGE, Constant.TANKSPEED, Constant.TANKCOOLDOWN));
+        					spawnPoints.get(i % spawnPoints.size()), this, Constant.TANKDMG, Constant.TANKRANGE, Constant.SPECIALPOINTS, Constant.TANKMAXHP, Constant.TANKSPEED, Constant.TANKCOOLDOWN));
         	}
         	else {
         		zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
-                        spawnPoints.get(i % spawnPoints.size()), this, Constant.ZOMBIEDMG, Constant.ZOMBIERANGE, Constant.ZOMBIESPEED, Constant.ZOMBIEHITCOOLDOWN));
+                        spawnPoints.get(i % spawnPoints.size()), this, Constant.ZOMBIEDMG, Constant.ZOMBIERANGE, Constant.ZOMBIEPOINTS, Constant.ZOMBIEMAXHP, Constant.ZOMBIESPEED, Constant.ZOMBIEHITCOOLDOWN));
         	}
-
+      
             // Check there isn't already a zombie there, or they will be stuck
             boolean collides = false;
             for (Zombie otherZombie : aliveZombies) {
@@ -156,14 +163,10 @@ public class Level implements Screen {
                 aliveZombies.add(zombie);
             }
         }
-
+       
         return notSpawned;
     }
-    
-    public void spawnBoss(Sprite bossSprite, Vector2 spawnPoint) {
-    	
-    	
-    }
+ 
 
 
     /**

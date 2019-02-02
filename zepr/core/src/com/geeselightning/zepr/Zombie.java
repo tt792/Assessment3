@@ -9,16 +9,18 @@ public class Zombie extends Character {
     private Player player = Player.getInstance();
     float hitCooldown;
     int attackDamage;
+    int points;
     public int hitRange;
     
     boolean hit = false;
 
-    public Zombie(Sprite sprite, Vector2 zombieSpawn, Level currentLevel, int attackDamage, int hitRange, float speed, float hitCooldown) {
+    public Zombie(Sprite sprite, Vector2 zombieSpawn, Level currentLevel, int attackDamage, int hitRange, int points, int health, float speed, float hitCooldown) {
         super(sprite, zombieSpawn, currentLevel);
         this.attackDamage = attackDamage;
         this.hitRange = hitRange;
+        this.points = points;
         this.speed = speed;
-        this.health = Constant.ZOMBIEMAXHP;
+        this.health = health;
         this.hitCooldown = hitCooldown;
     }
 
@@ -56,7 +58,7 @@ public class Zombie extends Character {
             currentLevel.zombiesRemaining--;
             currentLevel.aliveZombies.remove(this);
             this.getTexture().dispose();
-            player.addPoints(Constant.ZOMBIEPOINTS);
+            player.addPoints(points);
         }
     }
 }
