@@ -159,6 +159,12 @@ public class Level implements Screen {
 
         return notSpawned;
     }
+    
+    public void spawnBoss(Sprite bossSprite, Vector2 spawnPoint) {
+    	
+    	
+    }
+
 
     /**
      * Used for collision detection between the player and map
