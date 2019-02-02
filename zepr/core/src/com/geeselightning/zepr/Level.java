@@ -128,7 +128,7 @@ public class Level implements Screen {
         	//See if its a boss wave yet
         	if (currentWave == 3 && !bossSpawned) {
         		zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
-        				spawnPoints.get(i % spawnPoints.size()), this, Constant.BOSS1DMG, Constant.BOSS1RANGE, Constant.BOSSPOINTS, Constant.BOSS1MAXHP Constant.BOSS1SPEED, Constant.BOSS1COOLDOWN));
+        				spawnPoints.get(i % spawnPoints.size()), this, Constant.BOSS1DMG, Constant.BOSS1RANGE, Constant.BOSSPOINTS, Constant.BOSS1MAXHP, Constant.BOSS1SPEED, Constant.BOSS1COOLDOWN));
         		bossSpawned = true;
         		zombie.scale(2);
         	}
