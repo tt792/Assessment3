@@ -121,14 +121,14 @@ public class Level implements Screen {
         for (int i = 0; i < amount; i++) {
         	Zombie zombie;
         	
-        	//Create a new RNG
+        	//Create a new RNG for the different zombie types
         	Random rand = new Random();
         	int n = rand.nextInt(1000);
         	
         	//See if its a boss wave yet
-        	if (currentWave == 3 && !bossSpawned) {
+        	if (currentWave == 3 && !bossSpawned) { //change to spawn on the 3rd level instead
         		zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
-        				spawnPoints.get(i % spawnPoints.size()), this, Constant.BOSS1DMG, Constant.BOSS1RANGE, Constant.BOSSPOINTS, Constant.BOSS1MAXHP, Constant.BOSS1SPEED, Constant.BOSS1COOLDOWN));
+        				spawnPoints.get(i % spawnPoints.size()), this, Constant.BOSS1DMG, Constant.BOSS1RANGE, Constant.BOSSPOINTS, Constant.BOSS1MAXHP, Constant.BOSS1SPEED, Constant.BOSS1COOLDOWN, "BOSS"));
         		bossSpawned = true;
         		zombie.scale(2);
         	}
@@ -139,14 +139,14 @@ public class Level implements Screen {
         		
         		if(m == 1) //Create a fast zombie
         			zombie = (new Zombie(new Sprite(new Texture("zombie02.png")),
-        					spawnPoints.get(i % spawnPoints.size()), this, Constant.FASTDMG, Constant.FASTRANGE, Constant.SPECIALPOINTS, Constant.FASTMAXHP, Constant.FASTSPEED, Constant.FASTCOOLDOWN));
+        					spawnPoints.get(i % spawnPoints.size()), this, Constant.FASTDMG, Constant.FASTRANGE, Constant.SPECIALPOINTS, Constant.FASTMAXHP, Constant.FASTSPEED, Constant.FASTCOOLDOWN, "FAST"));
         		else //Create a tank zombie
         			zombie = (new Zombie(new Sprite(new Texture("zombie03.png")),
-        					spawnPoints.get(i % spawnPoints.size()), this, Constant.TANKDMG, Constant.TANKRANGE, Constant.SPECIALPOINTS, Constant.TANKMAXHP, Constant.TANKSPEED, Constant.TANKCOOLDOWN));
+        					spawnPoints.get(i % spawnPoints.size()), this, Constant.TANKDMG, Constant.TANKRANGE, Constant.SPECIALPOINTS, Constant.TANKMAXHP, Constant.TANKSPEED, Constant.TANKCOOLDOWN, "TANK"));
         	}
         	else {
         		zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
-                        spawnPoints.get(i % spawnPoints.size()), this, Constant.ZOMBIEDMG, Constant.ZOMBIERANGE, Constant.ZOMBIEPOINTS, Constant.ZOMBIEMAXHP, Constant.ZOMBIESPEED, Constant.ZOMBIEHITCOOLDOWN));
+                        spawnPoints.get(i % spawnPoints.size()), this, Constant.ZOMBIEDMG, Constant.ZOMBIERANGE, Constant.ZOMBIEPOINTS, Constant.ZOMBIEMAXHP, Constant.ZOMBIESPEED, Constant.ZOMBIEHITCOOLDOWN, "ZOMB"));
         	}
       
             // Check there isn't already a zombie there, or they will be stuck
@@ -280,6 +280,8 @@ public class Level implements Screen {
             table.clear();
 
             // Try to spawn all zombie in the stage and update zombiesToSpawn with the amount that failed to spawn
+            //change here to be so that zombies only spawn at the levels: 1, 2, 4, 5
+            //and that the bosses spawn at 3 and 6
             zombiesToSpawn = spawnZombies(zombiesToSpawn, zombieSpawnPoints);
 
             // Spawn a power up and the end of a wave, if there isn't already a powerUp on the level
@@ -342,11 +344,12 @@ public class Level implements Screen {
                 zombie.draw(renderer.getBatch());
 
                 // Draw zombie health bars
-                int fillAmount = (int) (zombie.getHealth() / 100) * 30;
+                int fillAmount = (int) ((zombie.getHealth() / 100) * 32);
                 renderer.getBatch().setColor(Color.BLACK);
-                renderer.getBatch().draw(blank, zombie.getX(), zombie.getY()+32, 32, 3);
+                //change so that \/\/ is different for the different types of zombies
+                renderer.getBatch().draw(blank, zombie.getX(), zombie.getY()+32, Constant.ZOMBIEMAXHP, 3);
                 renderer.getBatch().setColor(Color.RED);
-                renderer.getBatch().draw(blank, zombie.getX()+1, zombie.getY()+33, fillAmount, 1);
+                renderer.getBatch().draw(blank, zombie.getX(), zombie.getY()+33, fillAmount, 1);
                 renderer.getBatch().setColor(Color.WHITE);
             }
 

@@ -1,6 +1,5 @@
 package com.geeselightning.zepr;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
@@ -11,10 +10,11 @@ public class Zombie extends Character {
     int attackDamage;
     int points;
     public int hitRange;
+    public String type;
     
     boolean hit = false;
 
-    public Zombie(Sprite sprite, Vector2 zombieSpawn, Level currentLevel, int attackDamage, int hitRange, int points, int health, float speed, float hitCooldown) {
+    public Zombie(Sprite sprite, Vector2 zombieSpawn, Level currentLevel, int attackDamage, int hitRange, int points, int health, float speed, float hitCooldown, String type) {
         super(sprite, zombieSpawn, currentLevel);
         this.attackDamage = attackDamage;
         this.hitRange = hitRange;
@@ -22,6 +22,7 @@ public class Zombie extends Character {
         this.speed = speed;
         this.health = health;
         this.hitCooldown = hitCooldown;
+        this.type = type;
     }
 
     public void attack(Player player, float delta) {
