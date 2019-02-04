@@ -133,7 +133,6 @@ public class SelectLevelScreen implements Screen {
         });
         
         //set the stage to be the town (1st stage)
-        System.out.println(Zepr.progress);
 		switch(Zepr.progress) {
 		case Zepr.TOWN:
 	        stageDescription.setText(townDescription);

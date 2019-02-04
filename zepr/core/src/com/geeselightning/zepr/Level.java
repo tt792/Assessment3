@@ -42,7 +42,9 @@ public class Level implements Screen {
     protected int zombiesRemaining; // the number of zombies left to kill to complete the wave
     private int zombiesToSpawn; // the number of zombies that are left to be spawned this wave
     private boolean pauseButton = false;
-    private boolean bossSpawned = false;
+    private boolean bossSpawned = false; 
+    private Rock[] rocklist = new Rock[0]; //create the empty list of rocks
+    
     Texture blank;
     Vector2 powerSpawn;
     PowerUp currentPowerUp = null;
@@ -51,7 +53,7 @@ public class Level implements Screen {
     Label healthLabel = new Label("", skin);
     Label pointsLabel = new Label("", skin);
     Label powerupLabel = new Label("", skin);
-
+    //for the regular game
     public Level(Zepr zepr, String mapLocation, Vector2 playerSpawn, ArrayList<Vector2> zombieSpawnPoints, int[] waves, Vector2 powerSpawn) {
         parent = zepr;
         this.mapLocation = mapLocation;
@@ -73,6 +75,19 @@ public class Level implements Screen {
         this.table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
+    }
+    
+    //for the minigame
+    public Level(Zepr zepr, String mapLocation, Vector2 playerSpawn) {
+    	parent = zepr;
+    	this.mapLocation = mapLocation;
+    	this.playerSpawn = playerSpawn;
+    	this.zombieSpawnPoints = null;
+    	this.isPaused = false;
+    	this.stage = new Stage(new ScreenViewport());
+    	this.table = new Table();
+    	table.setFillParent(true);
+    	stage.addActor(table);
     }
 
 
@@ -229,7 +244,7 @@ public class Level implements Screen {
     }
 
     @Override
-    public void render(float delta) {
+    public void render(float delta) { //if the game is not in the minigame act normally, if its the minigame then do something else
         if (isPaused) {
             // Clears the screen to black.
             Gdx.gl.glClearColor(0f, 0f, 0f, 1);
@@ -275,147 +290,187 @@ public class Level implements Screen {
             stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
             stage.draw();
         } else {
-            // Clears the screen to black.
-            Gdx.gl.glClearColor(0f, 0f, 0f, 1);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-            table.clear();
-
-            // Try to spawn all zombie in the stage and update zombiesToSpawn with the amount that failed to spawn
-            //change here to be so that zombies only spawn at the levels: 1, 2, 4, 5
-            //and that the bosses spawn at 3 and 6
-            zombiesToSpawn = spawnZombies(zombiesToSpawn, zombieSpawnPoints);
-
-            // Spawn a power up and the end of a wave, if there isn't already a powerUp on the level
-            if (zombiesRemaining == 0 && currentPowerUp == null) {
-                int random = (int )(Math.random() * 3 + 1);
-                if (random == 1) {
-                    currentPowerUp = new PowerUpHeal(this);
-                } else if (random == 2){
-                    // random == 2
-                    currentPowerUp = new PowerUpSpeed(this);
-                } else {
-                    currentPowerUp = new PowerUpImmunity(this);
-                }
-            }
-
-            if (zombiesRemaining == 0) {
-                // Wave complete, increment wave number
-                currentWave++;
-                if (currentWave > waves.length) {
-                    // Level completed, back to select screen and complete stage.
-                    // If stage is being replayed complete() will stop progress being incremented.
-                    isPaused = true;
-                    complete(); //what does this do? how to increment the level?
-                    if (parent.progress == parent.COMPLETE) {
-                        parent.setScreen(new TextScreen(parent, "Game completed."));
-                    } else {
-                        parent.setScreen(new TextScreen(parent, "Level completed."));
-                    }
-                } else {
-                    // Update zombiesRemaining with the number of zombies of the new wave
-                    zombiesRemaining = waves[currentWave - 1];
-                    zombiesToSpawn = zombiesRemaining;
-                }
-            }
-
-            // Keep the player central in the screen.
-            camera.position.set(player.getCenter().x, player.getCenter().y, 0);
-            camera.update();
-
-            renderer.setView(camera);
-            renderer.render();
-
-            renderer.getBatch().begin();
-
-            player.draw(renderer.getBatch());
-
-            // Resolve all possible attacks
-            for (int i = 0; i < aliveZombies.size(); i++) {
-                Zombie zombie = aliveZombies.get(i);
-                // Zombies will only attack if they are in range, the attack has cooled down, and they are
-                // facing a player.
-                // Player will only attack in the reverse situation but player.attack must also be true. This is
-                //controlled by the ZeprInputProcessor. So the player will only attack when the user clicks.
-                if (player.attack) {
-                    player.attack(zombie, delta);
-                }
-                zombie.attack(player, delta);
-
-                // Draw zombies
-                zombie.draw(renderer.getBatch());
-
-                // Draw zombie health bars
-                int fillAmount = (int) ((zombie.getHealth() / 100) * 32);
-                renderer.getBatch().setColor(Color.BLACK);
-                //change so that \/\/ is different for the different types of zombies
-                if (zombie.type == "BOSS1") {
-                	int temp = (int) ((Constant.BOSS1MAXHP / 100) * 32);
-                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+32, temp, 3); //draw health bar aligned with the middle of the zombie
-                    renderer.getBatch().setColor(Color.RED);
-                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+33, fillAmount, 1);
-                    renderer.getBatch().setColor(Color.WHITE);
-                } else if (zombie.type == "FAST") {
-                	int temp = (int) ((Constant.FASTMAXHP / 100) * 32);
-                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+32, temp, 3);
-                    renderer.getBatch().setColor(Color.RED);
-                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+33, fillAmount, 1);
-                    renderer.getBatch().setColor(Color.WHITE);
-                } else if (zombie.type == "ZOMB") {
-                	int temp = (int) ((Constant.ZOMBIEMAXHP / 100) * 32);
-                    renderer.getBatch().draw(blank, zombie.getX(), zombie.getY()+32, temp, 3);
-                    renderer.getBatch().setColor(Color.RED);
-                    renderer.getBatch().draw(blank, zombie.getX(), zombie.getY()+33, fillAmount, 1);
-                    renderer.getBatch().setColor(Color.WHITE);
-                } else if (zombie.type == "TANK") {
-                	int temp = (int) ((Constant.TANKMAXHP / 100) * 32);
-                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+32, temp, 3);
-                    renderer.getBatch().setColor(Color.RED);
-                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+33, fillAmount, 1);
-                    renderer.getBatch().setColor(Color.WHITE);
-                } else {
-                	int temp = (int) ((Constant.ZOMBIEMAXHP / 100) * 32);
-                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+32, temp, 3);
-                    renderer.getBatch().setColor(Color.RED);
-                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+33, fillAmount, 1);
-                    renderer.getBatch().setColor(Color.WHITE);
-                }
-            }
-
-            if (currentPowerUp != null) {
-                // Activate the powerup up if the player moves over it and it's not already active
-                if (currentPowerUp.overlapsPlayer() && !currentPowerUp.active) {
-                    currentPowerUp.activate();
-                }
-                // Only render the powerup if it is not active, otherwise it disappears
-                if (!currentPowerUp.active) {
-                    currentPowerUp.draw(renderer.getBatch());
-                }
-                currentPowerUp.update(delta);
-            }
-
-            renderer.getBatch().end();
-
-
-            String progressString = ("Wave " + Integer.toString(currentWave) + ", " + Integer.toString(zombiesRemaining) + " zombies remaining.");
-            String healthString = ("Health: " + Integer.toString(player.health) + "HP");
-            String pointsString = ("Points:" + Integer.toString(player.getPoints()) + " points");
-
-            progressLabel.setText(progressString);
-            healthLabel.setText(healthString);
-            pointsLabel.setText(pointsString);
-
-            table.top().left();
-            table.add(progressLabel).pad(10);
-            table.row().pad(10);
-            table.add(healthLabel).pad(10).left();
-            table.row();
-            table.add(pointsLabel).pad(10).left();
-            table.row();
-            table.add(powerupLabel);
-            stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-            stage.draw();
-        }
+        	if (Zepr.progress != Zepr.MINIGAME) { //if in the non minigame <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	            // Clears the screen to black.
+	            Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+	            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	
+	            table.clear();
+	
+	            // Try to spawn all zombie in the stage and update zombiesToSpawn with the amount that failed to spawn
+	            //change here to be so that zombies only spawn at the levels: 1, 2, 4, 5
+	            //and that the bosses spawn at 3 and 6
+	            zombiesToSpawn = spawnZombies(zombiesToSpawn, zombieSpawnPoints);
+	
+	            // Spawn a power up and the end of a wave, if there isn't already a powerUp on the level
+	            if (zombiesRemaining == 0 && currentPowerUp == null) {
+	                int random = (int )(Math.random() * 3 + 1);
+	                if (random == 1) {
+	                    currentPowerUp = new PowerUpHeal(this);
+	                } else if (random == 2){
+	                    // random == 2
+	                    currentPowerUp = new PowerUpSpeed(this);
+	                } else {
+	                    currentPowerUp = new PowerUpImmunity(this);
+	                }
+	            }
+	
+	            if (zombiesRemaining == 0) {
+	                // Wave complete, increment wave number
+	                currentWave++;
+	                if (currentWave > waves.length) {
+	                    // Level completed, back to select screen and complete stage.
+	                    // If stage is being replayed complete() will stop progress being incremented.
+	                    isPaused = true;
+	                    complete(); //what does this do? how to increment the level?
+	                    if (parent.progress == parent.COMPLETE) {
+	                        parent.setScreen(new TextScreen(parent, "Game completed."));
+	                    } else {
+	                        parent.setScreen(new TextScreen(parent, "Level completed."));
+	                    }
+	                } else {
+	                    // Update zombiesRemaining with the number of zombies of the new wave
+	                    zombiesRemaining = waves[currentWave - 1];
+	                    zombiesToSpawn = zombiesRemaining;
+	                }
+	            }
+	
+	            // Keep the player central in the screen.
+	            camera.position.set(player.getCenter().x, player.getCenter().y, 0);
+	            camera.update();
+	
+	            renderer.setView(camera);
+	            renderer.render();
+	
+	            renderer.getBatch().begin();
+	
+	            player.draw(renderer.getBatch());
+	
+	            // Resolve all possible attacks
+	            for (int i = 0; i < aliveZombies.size(); i++) {
+	                Zombie zombie = aliveZombies.get(i);
+	                // Zombies will only attack if they are in range, the attack has cooled down, and they are
+	                // facing a player.
+	                // Player will only attack in the reverse situation but player.attack must also be true. This is
+	                //controlled by the ZeprInputProcessor. So the player will only attack when the user clicks.
+	                if (player.attack) {
+	                    player.attack(zombie, delta);
+	                }
+	                zombie.attack(player, delta);
+	
+	                // Draw zombies
+	                zombie.draw(renderer.getBatch());
+	
+	                // Draw zombie health bars
+	                int fillAmount = (int) ((zombie.getHealth() / 100) * 32);
+	                renderer.getBatch().setColor(Color.BLACK);
+	                //change so that \/\/ is different for the different types of zombies
+	                if (zombie.type == "BOSS1") {
+	                	int temp = (int) ((Constant.BOSS1MAXHP / 100) * 32);
+	                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+32, temp, 3); //draw health bar aligned with the middle of the zombie
+	                    renderer.getBatch().setColor(Color.RED);
+	                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+33, fillAmount, 1);
+	                    renderer.getBatch().setColor(Color.WHITE);
+	                } else if (zombie.type == "FAST") {
+	                	int temp = (int) ((Constant.FASTMAXHP / 100) * 32);
+	                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+32, temp, 3);
+	                    renderer.getBatch().setColor(Color.RED);
+	                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+33, fillAmount, 1);
+	                    renderer.getBatch().setColor(Color.WHITE);
+	                } else if (zombie.type == "ZOMB") {
+	                	int temp = (int) ((Constant.ZOMBIEMAXHP / 100) * 32);
+	                    renderer.getBatch().draw(blank, zombie.getX(), zombie.getY()+32, temp, 3);
+	                    renderer.getBatch().setColor(Color.RED);
+	                    renderer.getBatch().draw(blank, zombie.getX(), zombie.getY()+33, fillAmount, 1);
+	                    renderer.getBatch().setColor(Color.WHITE);
+	                } else if (zombie.type == "TANK") {
+	                	int temp = (int) ((Constant.TANKMAXHP / 100) * 32);
+	                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+32, temp, 3);
+	                    renderer.getBatch().setColor(Color.RED);
+	                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+33, fillAmount, 1);
+	                    renderer.getBatch().setColor(Color.WHITE);
+	                } else {
+	                	int temp = (int) ((Constant.ZOMBIEMAXHP / 100) * 32);
+	                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+32, temp, 3);
+	                    renderer.getBatch().setColor(Color.RED);
+	                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+33, fillAmount, 1);
+	                    renderer.getBatch().setColor(Color.WHITE);
+	                }
+	            }
+	
+	            if (currentPowerUp != null) {
+	                // Activate the powerup up if the player moves over it and it's not already active
+	                if (currentPowerUp.overlapsPlayer() && !currentPowerUp.active) {
+	                    currentPowerUp.activate();
+	                }
+	                // Only render the powerup if it is not active, otherwise it disappears
+	                if (!currentPowerUp.active) {
+	                    currentPowerUp.draw(renderer.getBatch());
+	                }
+	                currentPowerUp.update(delta);
+	            }
+	
+	            renderer.getBatch().end();
+	
+	
+	            String progressString = ("Wave " + Integer.toString(currentWave) + ", " + Integer.toString(zombiesRemaining) + " zombies remaining.");
+	            String healthString = ("Health: " + Integer.toString(player.health) + "HP");
+	            String pointsString = ("Points:" + Integer.toString(player.getPoints()) + " points");
+	
+	            progressLabel.setText(progressString);
+	            healthLabel.setText(healthString);
+	            pointsLabel.setText(pointsString);
+	
+	            table.top().left();
+	            table.add(progressLabel).pad(10);
+	            table.row().pad(10);
+	            table.add(healthLabel).pad(10).left();
+	            table.row();
+	            table.add(pointsLabel).pad(10).left();
+	            table.row();
+	            table.add(powerupLabel);
+	            stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+	            stage.draw();
+	        } else if (Zepr.progress == Zepr.MINIGAME) { //if its the minigame
+	            // Clears the screen to black.
+	            Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+	            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	            table.clear();
+	            
+	            
+	            
+	            // Keep the player central in the screen.
+	            camera.position.set(player.getCenter().x, player.getCenter().y, 0);
+	            camera.update();
+	
+	            renderer.setView(camera);
+	            renderer.render();
+	
+	            renderer.getBatch().begin();
+	            player.draw(renderer.getBatch());
+	            renderer.getBatch().end();
+	        	
+	        	
+	            String progressString = ("Minigame!!");
+	            String healthString = ("Health: " + Integer.toString(player.health) + "HP"); //want players health to count here or not?
+	            String pointsString = ("Points:" + Integer.toString(player.getPoints()) + " points");
+	
+	            progressLabel.setText(progressString);
+	            healthLabel.setText(healthString);
+	            pointsLabel.setText(pointsString);
+	
+	            table.top().left();
+	            table.add(progressLabel).pad(10);
+	            table.row().pad(10);
+	            table.add(healthLabel).pad(10).left();
+	            table.row();
+	            table.add(pointsLabel).pad(10).left();
+	            table.row();
+	            table.add(powerupLabel);
+	            stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+	            stage.draw();
+	    	}
+    	} 
     }
 
     @Override
