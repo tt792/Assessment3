@@ -126,15 +126,17 @@ public class Level implements Screen {
         	int n = rand.nextInt(1000);
         	
         	//See if its a boss wave yet
+        	/*
         	if (currentWave == 3 && !bossSpawned) { //change to spawn on the 3rd level instead
         		zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
         				spawnPoints.get(i % spawnPoints.size()), this, Constant.BOSS1DMG, Constant.BOSS1RANGE, Constant.BOSSPOINTS, Constant.BOSS1MAXHP, Constant.BOSS1SPEED, Constant.BOSS1COOLDOWN, "BOSS1"));
         		bossSpawned = true;
         		zombie.scale(2);
         	}
+        	*/
         	
         	//If the random number is less than the chance to spawn a special zombie
-        	else if (n <= Constant.SPECIALCHANCE) {
+        	if (n <= Constant.SPECIALCHANCE) { ///change back to else if
         		int m = rand.nextInt(2);
         		
         		if(m == 1) //Create a fast zombie
@@ -304,7 +306,7 @@ public class Level implements Screen {
                     // Level completed, back to select screen and complete stage.
                     // If stage is being replayed complete() will stop progress being incremented.
                     isPaused = true;
-                    complete();
+                    complete(); //what does this do? how to increment the level?
                     if (parent.progress == parent.COMPLETE) {
                         parent.setScreen(new TextScreen(parent, "Game completed."));
                     } else {

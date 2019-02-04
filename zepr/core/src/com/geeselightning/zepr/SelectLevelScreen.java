@@ -40,7 +40,7 @@ public class SelectLevelScreen implements Screen {
         Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
 
         // Creating stage buttons.
-        final TextButton town = new TextButton("Town", skin);
+        //final TextButton town = new TextButton("Town", skin);
         //TextButton halifax = new TextButton("Halifax", skin);
         //TextButton courtyard = new TextButton("Courtyard", skin);
 
@@ -56,13 +56,15 @@ public class SelectLevelScreen implements Screen {
         TextButton back = new TextButton("Back", skin);
 
         // Creating stage descriptions.
-        Label title = new Label("Choose a stage and character.", skin, "subtitle");
+        Label title = new Label("Choose a character.", skin, "subtitle");
         final String townDescription = "You wake up hungover in town to discover there is a zombie apocalypse."; //change to fit the new method
-        //final String halifaxDescription = "You need to get your laptop with the work on it from your accomodation.";
-        //final String courtyardDescription = "You should go to Courtyard and get some breakfast.";
-        //final String lockedDescription = "This stage is locked until you complete the previous one.";
-        final String defaultDescription ="Select a stage from the buttons above.";
-        stageDescription = new Label(defaultDescription, skin);
+        final String halifaxDescription = "You need to get your laptop with the work on it from your accomodation.";
+        final String courtyardDescription = "You should go to Courtyard and get some breakfast.";
+        final String minigameDescription = "Time to get from east to west.";
+        final String compSciDescription = "You need your (thing).";
+        final String outsideDescription = "You should head over to the law building.";
+        final String lawDescription = "I hear a loud gooselike screaching";
+        stageDescription = new Label(townDescription, skin);
         stageDescription.setWrap(true);
         stageDescription.setWidth(100);
         stageDescription.setAlignment(Align.center);
@@ -100,12 +102,6 @@ public class SelectLevelScreen implements Screen {
         stageSelect.row();
         stageSelect.add(title).colspan(3);
 
-        stageSelect.row().pad(50,0,100,0);
-        stageSelect.add(town).pad(10).colspan(3);
-        //removed the other stage buttons
-        //stageSelect.add(halifax).pad(10);
-        //stageSelect.add(courtyard).pad(10);
-
         stageSelect.row();
         stageSelect.add(stageDescription).width(1000f).colspan(3);
 
@@ -121,7 +117,7 @@ public class SelectLevelScreen implements Screen {
         // Adding play button at the bottom.
         Table bottomTable = new Table();
         bottomTable.setFillParent(true);
-        // bottomTable.setDebug(true); // Adds borders for the table.
+        //bottomTable.setDebug(true); // Adds borders for the table.
         stage.addActor(bottomTable);
 
         bottomTable.bottom();
@@ -136,49 +132,39 @@ public class SelectLevelScreen implements Screen {
                 parent.changeScreen(Zepr.MENU);
             }
         });
-
-        // Defining actions for the town button.
-        town.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                stageDescription.setText(townDescription);
-                stageLink = Zepr.TOWN;
-            }
-        });
         
-        //removed the other buttons from the game
-        /*
-        if (parent.progress <= parent.TOWN) {
-            halifax.setColor(Color.DARK_GRAY);
-            halifax.getLabel().setColor(Color.DARK_GRAY);
-        } else {
-            // Defining actions for the halifax button.
-            halifax.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                    stageDescription.setText(halifaxDescription);
-                    stageLink = Zepr.HALIFAX;
-                }
-            });
-        }
-		
-        if (parent.progress <= parent.HALIFAX) {
-            courtyard.setColor(Color.DARK_GRAY);
-            courtyard.getLabel().setColor(Color.DARK_GRAY);
-        } else {
-            // Defining actions for the courtyard button.
-            courtyard.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                    stageDescription.setText(courtyardDescription);
-                    stageLink = Zepr.COURTYARD;
-                }
-            });
-        }
-		*/
+        //set the stage to be the town (1st stage)
+        System.out.println(Zepr.progress);
+		switch(Zepr.progress) {
+		case Zepr.TOWN:
+	        stageDescription.setText(townDescription);
+	        stageLink = Zepr.TOWN;
+			break;
+		case Zepr.HALIFAX:
+	        stageDescription.setText(halifaxDescription);
+	        stageLink = Zepr.HALIFAX;
+			break;
+		case Zepr.COURTYARD:
+	        stageDescription.setText(courtyardDescription);
+	        stageLink = Zepr.COURTYARD;
+			break;
+		case Zepr.MINIGAME:
+	        stageDescription.setText(townDescription);
+	        stageLink = Zepr.MINIGAME;
+			break;
+		case Zepr.COMPSCI:
+	        stageDescription.setText(townDescription);
+	        stageLink = Zepr.COMPSCI;
+			break;
+		case Zepr.OUTSIDE:
+	        stageDescription.setText(townDescription);
+	        stageLink = Zepr.OUTSIDE;
+			break;
+		case Zepr.LAW:
+			break;
+		}
         
         //Defining actions for the nerdy button.
-
         nerdy.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

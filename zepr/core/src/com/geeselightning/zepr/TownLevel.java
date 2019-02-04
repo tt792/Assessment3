@@ -17,7 +17,7 @@ public class TownLevel extends Level {
             );
 
     // Defining the number of zombies to be spawned for each wave
-    private static final int[] waves = new int[]{5, 10, 15};
+    private static final int[] waves = new int[]{1, 1, 1}; //{5, 10, 15};
 
     public TownLevel(Zepr zepr) {
         super(zepr, mapLocation, playerSpawn, zombieSpawnPoints, waves, powerSpawn);

@@ -17,7 +17,7 @@ public class HalifaxLevel extends Level {
     );
 
     // Defining the number of zombies to be spawned for each wave
-    private static final int[] waves = new int[]{6, 11, 16};
+    private static final int[] waves = new int[]{1, 1, 1}; //{6, 11, 16};
 
     public HalifaxLevel(Zepr zepr) {
         super(zepr, mapLocation, playerSpawn, zombieSpawnPoints, waves, powerSpawn);

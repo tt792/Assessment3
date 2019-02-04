@@ -17,7 +17,7 @@ public class LawLevel extends Level {
     );
 
     // Defining the number of zombies to be spawned for each wave
-    private static final int[] waves = new int[]{7, 12, 17}; //change for this level
+    private static final int[] waves = new int[]{1, 1, 1}; //{7, 12, 17}; //change for this level
 
     public LawLevel(Zepr zepr) {
         super(zepr, mapLocation, playerSpawn, zombieSpawnPoints, waves, powerSpawn);
