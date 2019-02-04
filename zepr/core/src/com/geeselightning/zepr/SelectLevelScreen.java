@@ -40,7 +40,7 @@ public class SelectLevelScreen implements Screen {
         Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
 
         // Creating stage buttons.
-        //final TextButton town = new TextButton("Town", skin);
+        final TextButton minigame = new TextButton("MiniGame", skin);
         //TextButton halifax = new TextButton("Halifax", skin);
         //TextButton courtyard = new TextButton("Courtyard", skin);
 
@@ -96,6 +96,7 @@ public class SelectLevelScreen implements Screen {
         stageSelect.setFillParent(true);
         // stageSelect.setDebug(true); // Adds borders for the table.
         stage.addActor(stageSelect);
+        stage.addActor(minigame);
 
         stageSelect.center();
 
@@ -122,8 +123,6 @@ public class SelectLevelScreen implements Screen {
 
         bottomTable.bottom();
         bottomTable.add(play).pad(10).center();
-
-        // Adding button logic.
 
         // Defining actions for the back button.
         back.addListener(new ChangeListener() {
@@ -161,9 +160,20 @@ public class SelectLevelScreen implements Screen {
 	        stageLink = Zepr.OUTSIDE;
 			break;
 		case Zepr.LAW:
+			stageDescription.setText(lawDescription);
+			stageLink = Zepr.LAW;
 			break;
 		}
-        
+		
+        //minigame listener
+        minigame.addListener(new ChangeListener() {
+        	@Override
+        	public void changed(ChangeEvent event, Actor actor) {
+        		stageDescription.setText(minigameDescription);
+        		stageLink = Zepr.MINIGAME;
+        	}
+        });
+		
         //Defining actions for the nerdy button.
         nerdy.addListener(new ChangeListener() {
             @Override
