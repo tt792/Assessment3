@@ -128,7 +128,7 @@ public class Level implements Screen {
         	//See if its a boss wave yet
         	if (currentWave == 3 && !bossSpawned) { //change to spawn on the 3rd level instead
         		zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
-        				spawnPoints.get(i % spawnPoints.size()), this, Constant.BOSS1DMG, Constant.BOSS1RANGE, Constant.BOSSPOINTS, Constant.BOSS1MAXHP, Constant.BOSS1SPEED, Constant.BOSS1COOLDOWN, "BOSS"));
+        				spawnPoints.get(i % spawnPoints.size()), this, Constant.BOSS1DMG, Constant.BOSS1RANGE, Constant.BOSSPOINTS, Constant.BOSS1MAXHP, Constant.BOSS1SPEED, Constant.BOSS1COOLDOWN, "BOSS1"));
         		bossSpawned = true;
         		zombie.scale(2);
         	}
@@ -347,7 +347,17 @@ public class Level implements Screen {
                 int fillAmount = (int) ((zombie.getHealth() / 100) * 32);
                 renderer.getBatch().setColor(Color.BLACK);
                 //change so that \/\/ is different for the different types of zombies
-                renderer.getBatch().draw(blank, zombie.getX(), zombie.getY()+32, Constant.ZOMBIEMAXHP, 3);
+                if (zombie.type == "BOSS1") {
+                    renderer.getBatch().draw(blank, zombie.getX(), zombie.getY()+32, (int) ((Constant.BOSS1MAXHP / 100) * 32), 3);
+                } else if (zombie.type == "FAST") {
+                    renderer.getBatch().draw(blank, zombie.getX(), zombie.getY()+32, (int) ((Constant.FASTMAXHP / 100) * 32), 3);
+                } else if (zombie.type == "ZOMB") {
+                    renderer.getBatch().draw(blank, zombie.getX(), zombie.getY()+32, (int) ((Constant.ZOMBIEMAXHP / 100) * 32), 3);
+                } else if (zombie.type == "TANK") {
+                    renderer.getBatch().draw(blank, zombie.getX(), zombie.getY()+32, (int) ((Constant.TANKMAXHP / 100) * 32), 3);
+                } else {
+                    renderer.getBatch().draw(blank, zombie.getX(), zombie.getY()+32, (int) ((Constant.ZOMBIEMAXHP / 100) * 32), 3);
+                }
                 renderer.getBatch().setColor(Color.RED);
                 renderer.getBatch().draw(blank, zombie.getX(), zombie.getY()+33, fillAmount, 1);
                 renderer.getBatch().setColor(Color.WHITE);
