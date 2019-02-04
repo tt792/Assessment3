@@ -43,7 +43,11 @@ public class Level implements Screen {
     private int zombiesToSpawn; // the number of zombies that are left to be spawned this wave
     private boolean pauseButton = false;
     private boolean bossSpawned = false; 
-    private Rock[] rocklist = new Rock[0]; //create the empty list of rocks
+    
+    //minigame variables
+    private Rock[] rockList = new Rock[0]; //create the empty list of rocks
+    private float timer = 0f; //time the minigame
+    
     
     Texture blank;
     Vector2 powerSpawn;
@@ -171,7 +175,7 @@ public class Level implements Screen {
             for (Zombie otherZombie : aliveZombies) {
                 if (zombie.collidesWith(otherZombie)) {
                     collides = true;
-                    // Decrement counter as it didn't spawn.
+                    //increment? counter as it didn't spawn.
                     notSpawned++;
                 }
             }
@@ -436,8 +440,21 @@ public class Level implements Screen {
 	            Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 	            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	            table.clear();
+	            generateRock(); //add a new rock every frame
+	            
+	            for (Rock rock : rockList) { //remember to render the rocks
+	            	if (rock != null) {
+		            	if (rock.updateRock()) {
+		            		rock = null; //if a rock is at the bottom of the playable area, set it to null and destroy it
+		            	}
+	            	}
+	            }
 	            
 	            
+	            timer += Gdx.graphics.getDeltaTime();
+	            if (timer == 1000) {
+	            	//end minigame
+	            }
 	            
 	            // Keep the player central in the screen.
 	            camera.position.set(player.getCenter().x, player.getCenter().y, 0);
@@ -466,13 +483,18 @@ public class Level implements Screen {
 	            table.row();
 	            table.add(pointsLabel).pad(10).left();
 	            table.row();
-	            table.add(powerupLabel);
 	            stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 	            stage.draw();
 	    	}
     	} 
     }
 
+    private void generateRock() {
+    	Random rnd = new Random();
+    	rockList = new Rock[rockList.length + 1];
+    	rockList[rockList.length - 1] = new Rock(new Vector2(rnd.nextInt(606),526)); //spawn new rock at a random position at the top of the screen
+    }
+    
     @Override
     public void resize(int width, int height) {
         // Resize the camera depending the size of the window.

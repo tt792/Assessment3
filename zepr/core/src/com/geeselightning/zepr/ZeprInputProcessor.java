@@ -33,7 +33,7 @@ public class ZeprInputProcessor implements InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-        // This causes the player to stop moving in a certain direction when the corresponding key is released.
+    	// This causes the player to stop moving in a certain direction when the corresponding key is released.
         if (keycode == Input.Keys.W || keycode == Input.Keys.S) {
             player.velocity.y = 0;
         }

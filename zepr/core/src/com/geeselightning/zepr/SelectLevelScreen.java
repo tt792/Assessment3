@@ -169,6 +169,7 @@ public class SelectLevelScreen implements Screen {
         	@Override
         	public void changed(ChangeEvent event, Actor actor) {
         		stageDescription.setText(minigameDescription);
+        		Zepr.progress = Zepr.MINIGAME;
         		stageLink = Zepr.MINIGAME;
         	}
         });

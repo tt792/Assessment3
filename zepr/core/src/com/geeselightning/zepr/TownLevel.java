@@ -28,7 +28,6 @@ public class TownLevel extends Level {
         if (parent.progress == parent.TOWN) {
             parent.progress = parent.HALIFAX;
         }
-        // The stage is being replayed
     }
 
 }

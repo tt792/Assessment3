@@ -5,15 +5,10 @@ import com.badlogic.gdx.math.Vector2;
 public class MinigameLevel extends Level {
 
     private static final String mapLocation = "maps/minigamemap.tmx";
-    private static final Vector2 playerSpawn = new Vector2(300, 300);
+    private static final Vector2 playerSpawn = new Vector2(26 * 16, 20 * 16);
     
     public MinigameLevel(Zepr zepr) {
         super(zepr, mapLocation, playerSpawn);
-    }
-    
-    @Override 
-    public void show(){
-    	System.out.println("Things");
     }
     
     @Override
