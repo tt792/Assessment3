@@ -47,6 +47,8 @@ public class Level implements Screen {
     //minigame variables
     private Rock[] rockList = new Rock[0]; //create the empty list of rocks
     private float timer = 0f; //time the minigame
+    private int minigameHealth = 50; //the players health while in the minigame
+    private int rockSpawn = 0; //when to spawn a rock
     
     
     Texture blank;
@@ -439,37 +441,47 @@ public class Level implements Screen {
 	            // Clears the screen to black.
 	            Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 	            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	            table.clear();
-	            generateRock(); //add a new rock every frame
-	            
-	            for (Rock rock : rockList) { //remember to render the rocks
-	            	if (rock != null) {
-		            	if (rock.updateRock()) {
-		            		rock = null; //if a rock is at the bottom of the playable area, set it to null and destroy it
-		            	}
-	            	}
-	            }
-	            
-	            
 	            timer += Gdx.graphics.getDeltaTime();
-	            if (timer == 1000) {
-	            	//end minigame
+	            table.clear();
+	            if(rockSpawn == 3) {
+	            	generateRock(); //add a new rock every frame
+	            	rockSpawn = 0;
 	            }
+	            rockSpawn += 1;
 	            
 	            // Keep the player central in the screen.
 	            camera.position.set(player.getCenter().x, player.getCenter().y, 0);
 	            camera.update();
-	
 	            renderer.setView(camera);
 	            renderer.render();
 	
 	            renderer.getBatch().begin();
 	            player.draw(renderer.getBatch());
+	            for (int i = 0; i < rockList.length - 1; i++) {
+	            	if(rockList[i] != null) {
+	            		rockList[i].updateRock();
+	            		rockList[i].sprite.draw(renderer.getBatch());
+	            		if(rockList[i].rockCollision(player)) {
+	            			minigameHealth -= 1; //if a rock is colliding with the player, deduct health
+	            		}
+	            		if (rockList[i].testRock()) { //remove rocks below the map
+	            			rockList[i] = null;
+	            		}
+	            	}
+	            }
 	            renderer.getBatch().end();
-	        	
-	        	
+	            
+	            if (timer >= 30) { //after some given time currently 30s
+                    complete(); //what does this do? how to increment the level?
+                    parent.setScreen(new TextScreen(parent, "Level completed."));
+	            }
+	            
+	            if (minigameHealth <= 0) {
+	            	player.currentLevel.gameOver();
+	            }
+	            
 	            String progressString = ("Minigame!!");
-	            String healthString = ("Health: " + Integer.toString(player.health) + "HP"); //want players health to count here or not?
+	            String healthString = ("Health: " + Integer.toString(minigameHealth) + "HP"); //want players health to count here or not?
 	            String pointsString = ("Points:" + Integer.toString(player.getPoints()) + " points");
 	
 	            progressLabel.setText(progressString);
@@ -490,9 +502,13 @@ public class Level implements Screen {
     }
 
     private void generateRock() {
-    	Random rnd = new Random();
-    	rockList = new Rock[rockList.length + 1];
-    	rockList[rockList.length - 1] = new Rock(new Vector2(rnd.nextInt(606),526)); //spawn new rock at a random position at the top of the screen
+    	Random rnd = new Random(); //200 - 600 (bounds of the map)
+    	Rock[] temp = rockList;
+    	rockList = new Rock[rockList.length + 1]; //adds one to the length of the list
+    	for (int i = 0; i < temp.length; i++) { //put the new rock on the end of the list
+    		rockList[i] = temp[i];
+    	}
+    	rockList[rockList.length - 1] = new Rock(new Vector2(rnd.nextInt(400) + 200,550)); //spawn new rock at a random position at the top of the screen
     }
     
     @Override

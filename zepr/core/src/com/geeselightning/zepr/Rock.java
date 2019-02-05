@@ -24,9 +24,20 @@ public class Rock {
 		sprite.setPosition(xy.x, xy.y);
 	}
 	
-	public boolean updateRock() {
-		sprite.setPosition(sprite.getX(), sprite.getY() + 1);
-		if (sprite.getY() < 0) { //return true to destroy this rock once its off the world
+	public void updateRock() {
+		sprite.setPosition(sprite.getX(), sprite.getY() - 5);
+	}
+	
+	public boolean testRock() {
+		if (sprite.getY() < 250) { //return true for the y vaue at the bottom of the map
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean rockCollision(Player player) {
+		if(player.getBoundingRectangle().contains(sprite.getBoundingRectangle())) {
 			return true;
 		} else {
 			return false;
