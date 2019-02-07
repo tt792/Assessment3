@@ -372,38 +372,44 @@ public class Level implements Screen {
 	                zombie.draw(renderer.getBatch());
 	
 	                // Draw zombie health bars
-	                int fillAmount = (int) ((zombie.getHealth() / 100) * 32);
-	                renderer.getBatch().setColor(Color.BLACK);
+	                //int fillAmount = (int) ((zombie.getHealth() / 100) * 32);
+	                //renderer.getBatch().setColor(Color.BLACK);
+                	int temp = (int) (32);
 	                //change so that \/\/ is different for the different types of zombies
 	                if (zombie.type == "BOSS1") {
-	                	int temp = (int) ((Constant.BOSS1MAXHP / 100) * 32);
-	                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+32, temp, 3); //draw health bar aligned with the middle of the zombie
+		                int fillAmount = (int) ((zombie.getHealth() / Constant.BOSS1MAXHP) * 32);
+		                renderer.getBatch().setColor(Color.BLACK);
+	                    renderer.getBatch().draw(blank, zombie.getX() - (8), zombie.getY()+32, temp, 3); //draw health bar aligned with the middle of the zombie
 	                    renderer.getBatch().setColor(Color.RED);
-	                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+33, fillAmount, 1);
+	                    renderer.getBatch().draw(blank, zombie.getX() - (8), zombie.getY()+33, fillAmount, 1);
 	                    renderer.getBatch().setColor(Color.WHITE);
 	                } else if (zombie.type == "FAST") {
-	                	int temp = (int) ((Constant.FASTMAXHP / 100) * 32);
-	                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+32, temp, 3);
+		                int fillAmount = (int) ((zombie.getHealth() / Constant.FASTMAXHP) * 32);
+		                renderer.getBatch().setColor(Color.BLACK);
+	                    renderer.getBatch().draw(blank, zombie.getX() - (8), zombie.getY()+32, temp, 3);
 	                    renderer.getBatch().setColor(Color.RED);
-	                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+33, fillAmount, 1);
+	                    renderer.getBatch().draw(blank, zombie.getX() - (8), zombie.getY()+33, fillAmount, 1);
 	                    renderer.getBatch().setColor(Color.WHITE);
 	                } else if (zombie.type == "ZOMB") {
-	                	int temp = (int) ((Constant.ZOMBIEMAXHP / 100) * 32);
-	                    renderer.getBatch().draw(blank, zombie.getX(), zombie.getY()+32, temp, 3);
+		                int fillAmount = (int) ((zombie.getHealth() / Constant.ZOMBIEMAXHP) * 32);
+		                renderer.getBatch().setColor(Color.BLACK);
+	                    renderer.getBatch().draw(blank, zombie.getX() - (8), zombie.getY()+32, temp, 3);
 	                    renderer.getBatch().setColor(Color.RED);
-	                    renderer.getBatch().draw(blank, zombie.getX(), zombie.getY()+33, fillAmount, 1);
+	                    renderer.getBatch().draw(blank, zombie.getX() - (8), zombie.getY()+33, fillAmount, 1);
 	                    renderer.getBatch().setColor(Color.WHITE);
 	                } else if (zombie.type == "TANK") {
-	                	int temp = (int) ((Constant.TANKMAXHP / 100) * 32);
-	                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+32, temp, 3);
+		                int fillAmount = (int) ((zombie.getHealth() / Constant.TANKMAXHP) * 32);
+		                renderer.getBatch().setColor(Color.BLACK);
+	                    renderer.getBatch().draw(blank, zombie.getX() - (8), zombie.getY()+32, temp, 3);
 	                    renderer.getBatch().setColor(Color.RED);
-	                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+33, fillAmount, 1);
+	                    renderer.getBatch().draw(blank, zombie.getX() - (8), zombie.getY()+33, fillAmount, 1);
 	                    renderer.getBatch().setColor(Color.WHITE);
 	                } else {
-	                	int temp = (int) ((Constant.ZOMBIEMAXHP / 100) * 32);
-	                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+32, temp, 3);
+		                int fillAmount = (int) ((zombie.getHealth() / Constant.ZOMBIEMAXHP) * 32);
+		                renderer.getBatch().setColor(Color.BLACK);
+	                    renderer.getBatch().draw(blank, zombie.getX() - (8), zombie.getY()+32, temp, 3);
 	                    renderer.getBatch().setColor(Color.RED);
-	                    renderer.getBatch().draw(blank, zombie.getX() - (temp / 4), zombie.getY()+33, fillAmount, 1);
+	                    renderer.getBatch().draw(blank, zombie.getX() - (8), zombie.getY()+33, fillAmount, 1);
 	                    renderer.getBatch().setColor(Color.WHITE);
 	                }
 	            }
