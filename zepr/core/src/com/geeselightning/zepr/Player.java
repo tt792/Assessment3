@@ -18,6 +18,7 @@ public class Player extends Character {
     float speedMult;
     String playertype;
     public boolean isImmune;
+    public boolean isSanic;
     private int points;
     
     public int getPoints() {

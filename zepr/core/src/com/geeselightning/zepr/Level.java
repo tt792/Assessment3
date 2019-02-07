@@ -45,6 +45,8 @@ public class Level implements Screen {
     private boolean bossSpawned = false; 
 	Texture shield = new Texture("shield.png");
 	Sprite shieldSprite = new Sprite(shield);
+	Texture fast = new Texture("fast.png");
+	Sprite fastSprite = new Sprite(fast);
     
     //minigame variables
     private Rock[] rockList = new Rock[0]; //create the empty list of rocks
@@ -422,8 +424,14 @@ public class Level implements Screen {
 	            	shieldSprite.draw(renderer.getBatch());
 	            }
 	            
+	            if(player.isSanic) {
+	            	fastSprite.draw(renderer.getBatch());
+	            }
+	            
             	shieldSprite.setX(player.getX());
             	shieldSprite.setY(player.getY());
+            	fastSprite.setX(player.getX());
+            	fastSprite.setY(player.getY());
 	            
 	            renderer.getBatch().end();
 	
@@ -452,7 +460,7 @@ public class Level implements Screen {
 	            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	            timer += Gdx.graphics.getDeltaTime();
 	            table.clear();
-	            if(rockSpawn == 3) {
+	            if(rockSpawn == 4) {
 	            	generateRock(); //add a new rock every frame
 	            	rockSpawn = 0;
 	            }

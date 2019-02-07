@@ -14,6 +14,7 @@ public class PowerUpSpeed extends PowerUp {
     public void activate() {
         super.activate();
         super.player.speed += Constant.SPEEDUP;
+        super.player.isSanic = true;
         this.getTexture().dispose();
     }
 
@@ -21,6 +22,7 @@ public class PowerUpSpeed extends PowerUp {
     public void deactivate() {
         super.deactivate();
         super.player.speed -= Constant.SPEEDUP;
+        super.player.isSanic = false;
     }
 
     @Override
