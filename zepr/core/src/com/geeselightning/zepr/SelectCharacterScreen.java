@@ -240,6 +240,28 @@ public class SelectCharacterScreen implements Screen {
         	}
         });
         
+        
+//  //////Working on Load
+//        load.addListener(new ChangeListener() {
+//        	@Override
+//        	public void changed(ChangeEvent event, Actor actor) {
+//        		FileHandle file = Gdx.files.internal("data/saveFile.txt");
+//        		String text = file.readString();
+//        		System.out.println(text.toString());
+//        	}
+//        	
+//        });
+//        
+//        //////Working on save
+//        save.addListener(new ChangeListener() {
+//        	@Override
+//        	public void changed(ChangeEvent event, Actor actor) {
+//        		FileHandle file = Gdx.files.local("data/saveFile.txt");
+//        		file.writeString("dat", false);
+//        	}
+//        	
+//        });
+        
 
     }
     
