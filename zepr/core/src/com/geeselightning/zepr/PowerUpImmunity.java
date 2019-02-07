@@ -1,6 +1,7 @@
 package com.geeselightning.zepr;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class PowerUpImmunity extends PowerUp {
 

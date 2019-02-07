@@ -121,8 +121,6 @@ public class Player extends Character {
         //if (hitRefresh > 0.1 && getTexture() == attackTexture) {
             this.setTexture(mainTexture);
         }
-        
-        
     }
 
     @Override

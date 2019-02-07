@@ -43,6 +43,8 @@ public class Level implements Screen {
     private int zombiesToSpawn; // the number of zombies that are left to be spawned this wave
     private boolean pauseButton = false;
     private boolean bossSpawned = false; 
+	Texture shield = new Texture("shield.png");
+	Sprite shieldSprite = new Sprite(shield);
     
     //minigame variables
     private Rock[] rockList = new Rock[0]; //create the empty list of rocks
@@ -416,6 +418,13 @@ public class Level implements Screen {
 	                currentPowerUp.update(delta);
 	            }
 	
+	            if (player.isImmune) {
+	            	shieldSprite.draw(renderer.getBatch());
+	            }
+	            
+            	shieldSprite.setX(player.getX());
+            	shieldSprite.setY(player.getY());
+	            
 	            renderer.getBatch().end();
 	
 	
