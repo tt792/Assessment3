@@ -25,7 +25,7 @@ public class SelectCharacterScreen implements Screen {
 
     private Zepr parent;
     private Stage stage;
-    private String currentStage = "Stage 1";
+    private String currentStage;
     private boolean playerSet = false;
     Player player = Player.getInstance();
     private Label characterDescription;
@@ -107,6 +107,7 @@ public class SelectCharacterScreen implements Screen {
         bottomTable.setFillParent(true);
         stage.addActor(bottomTable);
         bottomTable.bottom();
+       
         
         bottomTable.row();
         bottomTable.add(minigame).pad(10).left();
@@ -118,33 +119,40 @@ public class SelectCharacterScreen implements Screen {
       		case Zepr.TOWN:
       	       // stageDescription.setText(townDescription);
       	        stageLink = Zepr.TOWN;
+      	        currentStage = "TOWN";
       			break;
       		case Zepr.HALIFAX:
       	       // stageDescription.setText(halifaxDescription);
       	        stageLink = Zepr.HALIFAX;
+      	      currentStage = "HALIFAX";
       			break;
       		case Zepr.COURTYARD:
       	       // stageDescription.setText(courtyardDescription);
       	        stageLink = Zepr.COURTYARD;
+      	      currentStage = "COURTYARD";
       			break;
       		case Zepr.MINIGAME:
       	        //stageDescription.setText(townDescription);
       	        stageLink = Zepr.MINIGAME;
+      	      currentStage = "MINIGAME";
       			break;
       		case Zepr.COMPSCI:
       	        //stageDescription.setText(townDescription);
       	        stageLink = Zepr.COMPSCI;
+      	      currentStage = "COMPSCI";
       			break;
       		case Zepr.OUTSIDE:
       	        //stageDescription.setText(townDescription);
       	        stageLink = Zepr.OUTSIDE;
+      	      currentStage = "OUTSIDE";
       			break;
       		case Zepr.LAW:
       			//stageDescription.setText(lawDescription);
       			stageLink = Zepr.LAW;
+      			currentStage = "LAW";
       			break;
       		}
-        
+      	currentStageLabel.setText("Current stage: " + currentStage);
         
         
         
