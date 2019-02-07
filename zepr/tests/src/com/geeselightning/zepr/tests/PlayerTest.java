@@ -27,7 +27,7 @@ public class PlayerTest {
     public void playerDoesNoDamageToZombieWhenAtMaxRange() {
         Player player = Player.getInstance();
 
-        Zombie zombie = new Zombie(new Sprite(), new Vector2(player.getCenter().x, player.getCenter().y + Constant.PLAYERRANGE), null);
+        Zombie zombie = new Zombie(new Sprite(), new Vector2(player.getCenter().x, player.getCenter().y - Constant.ZOMBIERANGE + 5), null, Constant.ZOMBIEDMG, Constant.ZOMBIERANGE, Constant.ZOMBIEPOINTS, Constant.ZOMBIEMAXHP, Constant.ZOMBIESPEED,Constant.ZOMBIEHITCOOLDOWN, "Normal");
         double originalHealth = zombie.getHealth();
         player.attack(zombie, 0);
 
@@ -40,7 +40,7 @@ public class PlayerTest {
     public void playerDoesDamageToZombieWhenInRange() {
         Player player = Player.getInstance();
 
-        Zombie zombie = new Zombie(new Sprite(), new Vector2(player.getCenter().x, player.getCenter().y + Constant.PLAYERRANGE - 10), null);
+        Zombie zombie = new Zombie(new Sprite(), new Vector2(player.getCenter().x, player.getCenter().y  + 5), null, Constant.ZOMBIEDMG, Constant.ZOMBIERANGE, Constant.ZOMBIEPOINTS, Constant.ZOMBIEMAXHP, Constant.ZOMBIESPEED,Constant.ZOMBIEHITCOOLDOWN, "Normal");
         double originalHealth = zombie.getHealth();
         player.attack(zombie, 0);
 
@@ -53,7 +53,7 @@ public class PlayerTest {
     public void playerDoesNoDamageToZombieOutOfRange() {
         Player player = Player.getInstance();
 
-        Zombie zombie = new Zombie(new Sprite(), new Vector2(player.getCenter().x, player.getCenter().y +100), null);
+        Zombie zombie = new Zombie(new Sprite(), new Vector2(player.getCenter().x, player.getCenter().y + Constant.ZOMBIERANGE + 10), null, Constant.ZOMBIEDMG, Constant.ZOMBIERANGE, Constant.ZOMBIEPOINTS, Constant.ZOMBIEMAXHP, Constant.ZOMBIESPEED,Constant.ZOMBIEHITCOOLDOWN, "Normal");
         double originalHealth = zombie.getHealth();
         player.attack(zombie, 0);
 
