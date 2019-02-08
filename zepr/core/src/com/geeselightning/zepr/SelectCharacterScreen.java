@@ -29,6 +29,7 @@ public class SelectCharacterScreen implements Screen {
     private boolean playerSet = false;
     Player player = Player.getInstance();
     private Label characterDescription;
+    private String playerType = "nerdy";
     
     private int stageLink = -1;
     
@@ -44,7 +45,6 @@ public class SelectCharacterScreen implements Screen {
 
     @Override
     public void show() {
-        
         // Send any input from the user to the stage.
         Gdx.input.setInputProcessor(stage);
 
@@ -87,20 +87,33 @@ public class SelectCharacterScreen implements Screen {
         characterSelectTable.add(chooseYourCharacterLabel).colspan(4).padBottom(5);
         characterSelectTable.row();
         characterSelectTable.add(currentChosenCharacterImage).size(375).padRight(5);
-        characterSelectTable.add(nerdy).pad(5);
-        characterSelectTable.add(jock).pad(5);
-        characterSelectTable.add(artsy).pad(5);
+        if (Zepr.progress == 3) {
+	        characterSelectTable.add(nerdy).pad(5);
+	        characterSelectTable.add(jock).pad(5);
+	        characterSelectTable.add(artsy).pad(5);
+        }
         characterSelectTable.row();
         
         // creating the button to begin playing the main game , character descriptions, mini-game button
         TextButton play = new TextButton("Start!", skin);
-        TextButton minigame = new TextButton("mini-game", skin);
+        TextButton ucas = new TextButton("Ucas Mode", skin);
         
         final String nerdyDescription = "\"build all the things!\"";
         final String sportyDescripton = "\"GOTTA GO FAST\"";
         final String artyDescription = "\"creation flows through me...\"";
         final Label characterDescription = new Label("-", skin);
         
+        
+        
+        player.setType(playerType); //sets the player type for the game
+        if (playerType == "nerdy") {
+    		characterDescription.setText(nerdyDescription);
+        } else if (playerType == "sporty") {
+    		characterDescription.setText(sportyDescripton);
+        }else if (playerType == "arty") {
+    		characterDescription.setText(artyDescription);
+        }
+		playerSet = true;
         
         // display the Play and mini-game button
         Table bottomTable = new Table();
@@ -110,7 +123,9 @@ public class SelectCharacterScreen implements Screen {
        
         
         bottomTable.row();
-        bottomTable.add(minigame).pad(10).left();
+        if (Zepr.progress == 3) {
+        	bottomTable.add(ucas).pad(10).left();
+        }
         bottomTable.add(characterDescription);
         bottomTable.add(play).pad(10).right();
         
@@ -184,10 +199,11 @@ public class SelectCharacterScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
             		currentChosenCharacterImage.setDrawable((Drawable) new SpriteDrawable(new Sprite(new Texture("player1sprite.png"))));
+                	playerType = "nerdy";
+            		player.setType(playerType);
             		nerdy.setColor(Color.GOLD);
             		jock.setColor(Color.CYAN);
             		artsy.setColor(Color.CYAN);
-            		player.setType("nerdy");
             		characterDescription.setText(nerdyDescription);
             		playerSet = true;
             }
@@ -198,7 +214,8 @@ public class SelectCharacterScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
             	currentChosenCharacterImage.setDrawable((Drawable) new SpriteDrawable(new Sprite(new Texture("player2sprite.png"))));
-                player.setType("sporty");
+            	playerType = "sporty";
+                player.setType(playerType);
                 nerdy.setColor(Color.CYAN);
         			jock.setColor(Color.GOLD);
         			artsy.setColor(Color.CYAN);
@@ -211,11 +228,12 @@ public class SelectCharacterScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
             	currentChosenCharacterImage.setDrawable((Drawable) new SpriteDrawable(new Sprite(new Texture("player3sprite.png"))));
-            		player.setType("artsy");
-                	nerdy.setColor(Color.CYAN);
-        			jock.setColor(Color.CYAN);
-        			artsy.setColor(Color.GOLD);
-        			characterDescription.setText(artyDescription);
+            	playerType = "arty";
+        		player.setType(playerType);
+            	nerdy.setColor(Color.CYAN);
+    			jock.setColor(Color.CYAN);
+    			artsy.setColor(Color.GOLD);
+    			characterDescription.setText(artyDescription);
                 playerSet = true;
             }
         });
@@ -224,8 +242,8 @@ public class SelectCharacterScreen implements Screen {
         play.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if (playerSet == true) {
-                    parent.changeScreen(Zepr.TOWN);
+                if ((stageLink != -1) && (playerSet == true)) {
+                    parent.changeScreen(stageLink);
                 }
             }
         });
@@ -238,12 +256,12 @@ public class SelectCharacterScreen implements Screen {
             
         });
         
-        minigame.addListener(new ChangeListener() {
+        ucas.addListener(new ChangeListener() {
         	@Override
         	public void changed(ChangeEvent event, Actor actor) {
         		if (playerSet == true) {
         			Zepr.progress = Zepr.MINIGAME;
-        			parent.changeScreen(Zepr.MINIGAME);
+        			parent.changeScreen(Zepr.progress);
         		}
         	}
         });
