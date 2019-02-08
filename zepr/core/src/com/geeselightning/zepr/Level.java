@@ -314,14 +314,17 @@ public class Level implements Screen {
 	
 	            // Spawn a power up and the end of a wave, if there isn't already a powerUp on the level
 	            if (zombiesRemaining == 0 && currentPowerUp == null) {
-	                int random = (int )(Math.random() * 3 + 1);
+	                int random = (int )(5);//Math.random() * 5 + 1);
 	                if (random == 1) {
 	                    currentPowerUp = new PowerUpHeal(this);
-	                } else if (random == 2){
-	                    // random == 2
+	                } else if (random == 2) {
 	                    currentPowerUp = new PowerUpSpeed(this);
-	                } else {
+	                } else if (random == 3) {
 	                    currentPowerUp = new PowerUpImmunity(this);
+	                } else if (random == 4) {
+	                	currentPowerUp = new PowerUpStrength(this);
+	                } else {
+	                	currentPowerUp = new PowerUpKnockback(this);
 	                }
 	            }
 	

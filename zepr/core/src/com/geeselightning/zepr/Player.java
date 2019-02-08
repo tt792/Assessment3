@@ -16,6 +16,7 @@ public class Player extends Character {
     float HPMult;
     float dmgMult;
     float speedMult;
+    float knockback = Constant.PLAYERKNOCKBACK;
     String playertype;
     public boolean isImmune;
     public boolean isSanic;

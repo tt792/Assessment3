@@ -10,6 +10,7 @@ public final class Constant {
     public static final int PLAYERMAXHP = 100; //Base player health
     public static final int PLAYERDMG = 10; //Base player damage
     public static final int PLAYERRANGE = 50; //Base player range
+    public static final float PLAYERKNOCKBACK = 20;
     public static final float PLAYERHITCOOLDOWN = 0.2f; //Base player hit cooldown
     public static final float NERDYHPMULT = 1.5f; //Nerd characters multiplier of base health
     public static final float NERDYDMGMULT = 1; //Nerd characters multiplier of base damage
@@ -50,8 +51,12 @@ public final class Constant {
     public static final float BOSS1COOLDOWN = 2.0f; //First boss' attack cooldown
     
     //Powerup constants
-    public static final int HEALUP = 30; //idk
-    public static final int SPEEDUP = 50; //idk
-    public static final float SPEEDUPTIME = 10; //idk
-    public static final float IMMUNITYTIME = 5; //idk
+    public static final int HEALUP = 30; //Heal powerup amount
+    public static final int SPEEDUP = 50; //Speed powerup amount
+    public static final float SPEEDUPTIME = 10; //Speed powerup duration
+    public static final float STRENGTHMULT = 2.0f; //Strength powerup multiplier
+    public static final float STRENGTHTIME = 10; //Strength powerup duration
+    public static final float KNOCKBACKMULT = 3.0f; //Knockback powerup multiplier
+    public static final float KNOCKBACKTIME = 30; //Knockback powerup duration
+    public static final float IMMUNITYTIME = 5; //Immunity powerup duration
 }
