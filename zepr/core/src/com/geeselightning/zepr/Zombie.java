@@ -48,7 +48,7 @@ public class Zombie extends Character {
         if (!hit)
         	velocity = getDirNormVector(player.getCenter()).scl(speed);
         else {
-        	velocity = getDirNormVector(player.getCenter()).scl(-(speed * 20));
+        	velocity = getDirNormVector(player.getCenter()).scl(-(speed * player.knockback));
         	hit = false;
         }
         
