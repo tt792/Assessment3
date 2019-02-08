@@ -20,6 +20,8 @@ public class Player extends Character {
     String playertype;
     public boolean isImmune;
     public boolean isSanic;
+    public boolean isStronk;
+    public boolean isKnockback;
     private int points;
     
     public int getPoints() {

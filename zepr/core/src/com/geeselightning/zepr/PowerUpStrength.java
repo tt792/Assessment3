@@ -15,6 +15,7 @@ public class PowerUpStrength extends PowerUp {
     public void activate() {
         super.activate();
         super.player.attackDamage *= Constant.STRENGTHMULT;
+        super.player.isStronk = true;
         this.getTexture().dispose();
     }
 
@@ -22,6 +23,7 @@ public class PowerUpStrength extends PowerUp {
     public void deactivate() {
         super.deactivate();
         super.player.attackDamage /= Constant.STRENGTHMULT;
+        super.player.isStronk = false;
     }
 
     @Override

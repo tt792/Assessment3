@@ -47,7 +47,11 @@ public class Level implements Screen {
 	Sprite shieldSprite = new Sprite(shield);
 	Texture fast = new Texture("fast.png");
 	Sprite fastSprite = new Sprite(fast);
-    
+	Texture stronk = new Texture("stronk.png");
+	Sprite stronkSprite = new Sprite(stronk);
+	Texture kb = new Texture("knockbackEffect.png");
+	Sprite kbSprite = new Sprite(kb);
+   
     //minigame variables
     private Rock[] rockList = new Rock[0]; //create the empty list of rocks
     private float timer = 0f; //time the minigame
@@ -112,7 +116,7 @@ public class Level implements Screen {
      */
     public void gameOver() {
         isPaused = true;
-        parent.setScreen(new TextScreen(parent, "You died. \n You had " + player.getPoints() + " points"));
+        parent.setScreen(new TextScreen(parent, "You died.\nYou had: " + player.getPoints() + " points!"));
     }
 
 
@@ -314,7 +318,7 @@ public class Level implements Screen {
 	
 	            // Spawn a power up and the end of a wave, if there isn't already a powerUp on the level
 	            if (zombiesRemaining == 0 && currentPowerUp == null) {
-	                int random = (int )(5);//Math.random() * 5 + 1);
+	                int random = (int )(Math.random() * 5 + 1);
 	                if (random == 1) {
 	                    currentPowerUp = new PowerUpHeal(this);
 	                } else if (random == 2) {
@@ -433,14 +437,29 @@ public class Level implements Screen {
 	            	shieldSprite.draw(renderer.getBatch());
 	            }
 	            
-	            if(player.isSanic) {
+	            if (player.isSanic) {
 	            	fastSprite.draw(renderer.getBatch());
 	            }
 	            
-            	shieldSprite.setX(player.getX());
-            	shieldSprite.setY(player.getY());
-            	fastSprite.setX(player.getX());
-            	fastSprite.setY(player.getY());
+	            if (player.isStronk) {
+	            	stronkSprite.draw(renderer.getBatch());
+	            }
+	            
+	            if (player.isKnockback) {
+	            	kbSprite.draw(renderer.getBatch());
+	            }
+	            
+	            float x = player.getX();
+	            float y = player.getY();
+	            
+            	shieldSprite.setX(x);
+            	shieldSprite.setY(y);
+            	fastSprite.setX(x);
+            	fastSprite.setY(y);
+            	stronkSprite.setX(x);
+            	stronkSprite.setY(y);
+            	kbSprite.setX(x);
+            	kbSprite.setY(y);
 	            
 	            renderer.getBatch().end();
 	

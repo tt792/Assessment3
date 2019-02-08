@@ -15,6 +15,7 @@ public class PowerUpKnockback extends PowerUp {
     public void activate() {
         super.activate();
         super.player.knockback *= Constant.KNOCKBACKMULT;
+        super.player.isKnockback = true;
         this.getTexture().dispose();
     }
 
@@ -22,6 +23,7 @@ public class PowerUpKnockback extends PowerUp {
     public void deactivate() {
         super.deactivate();
         super.player.knockback /= Constant.KNOCKBACKMULT;
+        super.player.isKnockback = false;
     }
 
     @Override

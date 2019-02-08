@@ -10,7 +10,7 @@ public final class Constant {
     public static final int PLAYERMAXHP = 100; //Base player health
     public static final int PLAYERDMG = 10; //Base player damage
     public static final int PLAYERRANGE = 50; //Base player range
-    public static final float PLAYERKNOCKBACK = 20;
+    public static final float PLAYERKNOCKBACK = 20; //Player knockback
     public static final float PLAYERHITCOOLDOWN = 0.2f; //Base player hit cooldown
     public static final float NERDYHPMULT = 1.5f; //Nerd characters multiplier of base health
     public static final float NERDYDMGMULT = 1; //Nerd characters multiplier of base damage
