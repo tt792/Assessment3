@@ -1,8 +1,14 @@
 package com.geeselightning.zepr;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javax.swing.JOptionPane;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -57,6 +63,7 @@ public class SelectCharacterScreen implements Screen {
         Label currentStageLabel = new Label("Current stage: " + currentStage, skin, "title");
         currentStageLabel.setFontScale(0.75f);
         TextButton load = new TextButton("Load", skin);
+        TextButton save = new TextButton("Save", skin);
         TextButton back = new TextButton("<--", skin);
         
         // displaying menu buttons and current stage label
@@ -65,6 +72,7 @@ public class SelectCharacterScreen implements Screen {
         menuBarTable.top();
         menuBarTable.add(back).pad(5);
         menuBarTable.add(load).pad(5);
+        menuBarTable.add(save).pad(5);
         menuBarTable.add(currentStageLabel).padLeft(5);
         stage.addActor(menuBarTable);
         
@@ -159,7 +167,7 @@ public class SelectCharacterScreen implements Screen {
       		case Zepr.OUTSIDE:
       	        //stageDescription.setText(townDescription);
       	        stageLink = Zepr.OUTSIDE;
-      	      currentStage = "OUTSIDE";
+      	        currentStage = "OUTSIDE";
       			break;
       		case Zepr.LAW:
       			//stageDescription.setText(lawDescription);
@@ -248,14 +256,6 @@ public class SelectCharacterScreen implements Screen {
             }
         });
         
-        load.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                infoBox("this isn't coded yet.", "ZEPR");
-                }
-            
-        });
-        
         ucas.addListener(new ChangeListener() {
         	@Override
         	public void changed(ChangeEvent event, Actor actor) {
@@ -266,27 +266,80 @@ public class SelectCharacterScreen implements Screen {
         	}
         });
         
+        /*
+         *for saving and loading
+         *TO SAVE:
+         * - Player Type
+         * - What level the player was at
+         * -  thats all?
+         */
+        //////Working on Load
+        load.addListener(new ChangeListener() {
+        	@Override
+        	public void changed(ChangeEvent event, Actor actor) {
+        		FileHandle file = Gdx.files.internal("data/saveFile.txt");
+        		String[] text = file.readString().split(":");
+        		Zepr.progress = Integer.parseInt(text[1]);
+        		playerType = text[0];
+        		parent.changeScreen(Zepr.progress);
+        	}
+        	
+        });
         
-//  //////Working on Load
-//        load.addListener(new ChangeListener() {
-//        	@Override
-//        	public void changed(ChangeEvent event, Actor actor) {
-//        		FileHandle file = Gdx.files.internal("data/saveFile.txt");
-//        		String text = file.readString();
-//        		System.out.println(text.toString());
-//        	}
-//        	
-//        });
-//        
-//        //////Working on save
-//        save.addListener(new ChangeListener() {
-//        	@Override
-//        	public void changed(ChangeEvent event, Actor actor) {
-//        		FileHandle file = Gdx.files.local("data/saveFile.txt");
-//        		file.writeString("dat", false);
-//        	}
-//        	
-//        });
+        //////Working on save
+        /*
+         * dont need save button as game will save at the start and after each level
+         * Save button for testing
+         */
+        save.addListener(new ChangeListener() {
+        	@Override
+        	public void changed(ChangeEvent event, Actor actor) {
+        		String path = Gdx.files.getLocalStoragePath() + "data/saveFile.txt";
+        		String saveData = new String(player.getType() + ":" + Zepr.progress);
+        		File file = new File(path);
+        		if (!file.exists()) { //if the file doesnt exists
+        			File createFile = new File(path);
+        			try {
+						createFile.createNewFile();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+        		}
+        		try {
+					BufferedWriter fileWriter = new BufferedWriter(new FileWriter(path));
+					fileWriter.write(saveData); //writes the players type and progress to the file
+					fileWriter.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+        		
+        		
+        		
+        		
+        		
+        		/*
+        		String path = Gdx.files.getLocalStoragePath()+ "saveFile.txt";
+        		FileWriter fileWriter = new FileWriter("saveFile.txt");
+        		PrintWriter printWriter = new PrintWriter(fileWriter);
+        		File tempFile = new File(path);
+        		boolean exists = tempFile.exists(); //test the file exists
+        		if (exists == false) { //then create file
+        			File createFile = new File("string");
+        			try {
+						createFile.createNewFile();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+        			System.out.println("created file");
+        		} else if (exists == true){//otherwise just need to overwrite it
+        			System.out.println("no file creation");
+        		}
+        		printWriter.print(path);
+        		printWriter.printf("asdyhasj", "some thing");
+        		*/
+        	}
+        	
+        });
         
 
     }
