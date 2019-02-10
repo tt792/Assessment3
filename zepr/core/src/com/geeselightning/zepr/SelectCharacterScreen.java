@@ -312,36 +312,9 @@ public class SelectCharacterScreen implements Screen {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-        		
-        		
-        		
-        		
-        		
-        		/*
-        		String path = Gdx.files.getLocalStoragePath()+ "saveFile.txt";
-        		FileWriter fileWriter = new FileWriter("saveFile.txt");
-        		PrintWriter printWriter = new PrintWriter(fileWriter);
-        		File tempFile = new File(path);
-        		boolean exists = tempFile.exists(); //test the file exists
-        		if (exists == false) { //then create file
-        			File createFile = new File("string");
-        			try {
-						createFile.createNewFile();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-        			System.out.println("created file");
-        		} else if (exists == true){//otherwise just need to overwrite it
-        			System.out.println("no file creation");
         		}
-        		printWriter.print(path);
-        		printWriter.printf("asdyhasj", "some thing");
-        		*/
-        	}
         	
         });
-        
-
     }
     
 

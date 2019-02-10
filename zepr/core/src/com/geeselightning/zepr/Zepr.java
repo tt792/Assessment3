@@ -32,7 +32,7 @@ public class Zepr extends Game {
 				this.setScreen(menuScreen);
 				break;
 			case SELECT:
-				selectCharacterScreen = new SelectCharacterScreen(this);
+				selectCharacterScreen = new SelectCharacterScreen(this); //this is the line which creates the problem
 				this.setScreen(selectCharacterScreen);
 				break;
 			case TOWN:

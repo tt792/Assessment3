@@ -52,7 +52,7 @@ public class TextScreen implements Screen {
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(Zepr.SELECT);
+                parent.changeScreen(Zepr.SELECT); //this is creating the bug where things get aweful
                 dispose();
             }
         });

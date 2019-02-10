@@ -553,7 +553,7 @@ public class Level implements Screen {
     	for (int i = 0; i < temp.length; i++) { //put the new rock on the end of the list
     		rockList[i] = temp[i];
     	}
-    	rockList[rockList.length - 1] = new Rock(new Vector2(rnd.nextInt(400) + 200,550)); //spawn new rock at a random position at the top of the screen
+    	rockList[rockList.length - 1] = new Rock(new Vector2(rnd.nextInt(450) + 190,550)); //spawn new rock at a random position at the top of the screen
     }
     
     @Override
