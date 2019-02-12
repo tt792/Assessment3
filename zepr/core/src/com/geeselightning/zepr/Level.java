@@ -145,39 +145,58 @@ public class Level implements Screen {
      *
      * @return the number of zombies that failed to spawn
      */
-    public int spawnZombies(int amount, ArrayList<Vector2> spawnPoints) {
+    public int spawnZombies(int amount) {
         int notSpawned = 0;
+        
         for (int i = 0; i < amount; i++) {
         	Zombie zombie;
         	
-        	//Create a new RNG for the different zombie types
+        	//Create a new RNG for use in this function
         	Random rand = new Random();
+        	
+        	//Create a random spawnpoint
+        	boolean foundSpawn = false;
+        	Vector2 spawnPoint = new Vector2();
+        	
+        	//Until we find a spawnpoint
+        	while(!foundSpawn) {
+        		//Generate a random x and y coordinate between 50 and 800
+        		int x = rand.nextInt(800) + 50;
+        		int y = rand.nextInt(800) + 50;
+        		
+        		//If that cell is not blocked then set the spawnpoint to that cell
+        		if (!isBlocked(x, y) && !isBlocked(x + 32, y + 32) && !isBlocked(x - 32, y - 32)) {
+        			spawnPoint = new Vector2(x, y);
+        			foundSpawn = true;
+        		}
+        	}
+
+        	//n is the chance for a zombie to be a special zombie
         	int n = rand.nextInt(1000);
         	
-        	//See if its a boss wave yet
-        	/*
-        	if (currentWave == 3 && !bossSpawned) { //change to spawn on the 3rd level instead
+        	if (((Zepr.progress == Zepr.COURTYARD && currentWave == 3) || (Zepr.progress == Zepr.LAW && currentWave == 3))&& !bossSpawned) { //change to spawn on the 3rd level instead
         		zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
-        				spawnPoints.get(i % spawnPoints.size()), this, Constant.BOSS1DMG, Constant.BOSS1RANGE, Constant.BOSSPOINTS, Constant.BOSS1MAXHP, Constant.BOSS1SPEED, Constant.BOSS1COOLDOWN, "BOSS1"));
+        				spawnPoint, this, Constant.BOSS1DMG, Constant.BOSS1RANGE, Constant.BOSSPOINTS, Constant.BOSS1MAXHP, Constant.BOSS1SPEED, Constant.BOSS1COOLDOWN, "BOSS1"));
         		bossSpawned = true;
         		zombie.scale(2);
         	}
-        	*/
-        	
-        	//If the random number is less than the chance to spawn a special zombie
-        	if (n <= Constant.SPECIALCHANCE) { ///change back to else if
-        		int m = rand.nextInt(2);
-        		
-        		if(m == 1) //Create a fast zombie
-        			zombie = (new Zombie(new Sprite(new Texture("zombie02.png")),
-        					spawnPoints.get(i % spawnPoints.size()), this, Constant.FASTDMG, Constant.FASTRANGE, Constant.SPECIALPOINTS, Constant.FASTMAXHP, Constant.FASTSPEED, Constant.FASTCOOLDOWN, "FAST"));
-        		else //Create a tank zombie
-        			zombie = (new Zombie(new Sprite(new Texture("zombie03.png")),
-        					spawnPoints.get(i % spawnPoints.size()), this, Constant.TANKDMG, Constant.TANKRANGE, Constant.SPECIALPOINTS, Constant.TANKMAXHP, Constant.TANKSPEED, Constant.TANKCOOLDOWN, "TANK"));
-        	}
         	else {
-        		zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
-                        spawnPoints.get(i % spawnPoints.size()), this, Constant.ZOMBIEDMG, Constant.ZOMBIERANGE, Constant.ZOMBIEPOINTS, Constant.ZOMBIEMAXHP, Constant.ZOMBIESPEED, Constant.ZOMBIEHITCOOLDOWN, "ZOMB"));
+        		
+	        	//If the random number is less than the chance to spawn a special zombie
+	        	if (n <= Constant.SPECIALCHANCE * Zepr.progress) { ///change back to else if
+	        		int m = rand.nextInt(2);
+	        		
+	        		if(m == 1) //Create a fast zombie
+	        			zombie = (new Zombie(new Sprite(new Texture("zombie02.png")),
+	        					spawnPoint, this, Constant.FASTDMG, Constant.FASTRANGE, Constant.SPECIALPOINTS, Constant.FASTMAXHP, Constant.FASTSPEED, Constant.FASTCOOLDOWN, "FAST"));
+	        		else //Create a tank zombie
+	        			zombie = (new Zombie(new Sprite(new Texture("zombie03.png")),
+	        					spawnPoint, this, Constant.TANKDMG, Constant.TANKRANGE, Constant.SPECIALPOINTS, Constant.TANKMAXHP, Constant.TANKSPEED, Constant.TANKCOOLDOWN, "TANK"));
+	        	}
+	        	else {
+	        		zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
+	        				spawnPoint, this, Constant.ZOMBIEDMG, Constant.ZOMBIERANGE, Constant.ZOMBIEPOINTS, Constant.ZOMBIEMAXHP, Constant.ZOMBIESPEED, Constant.ZOMBIEHITCOOLDOWN, "ZOMB"));
+	        	}
         	}
       
             // Check there isn't already a zombie there, or they will be stuck
@@ -314,7 +333,7 @@ public class Level implements Screen {
 	            // Try to spawn all zombie in the stage and update zombiesToSpawn with the amount that failed to spawn
 	            //change here to be so that zombies only spawn at the levels: 1, 2, 4, 5
 	            //and that the bosses spawn at 3 and 6
-	            zombiesToSpawn = spawnZombies(zombiesToSpawn, zombieSpawnPoints);
+	            zombiesToSpawn = spawnZombies(zombiesToSpawn);
 	
 	            // Spawn a power up and the end of a wave, if there isn't already a powerUp on the level
 	            if (zombiesRemaining == 0 && currentPowerUp == null) {

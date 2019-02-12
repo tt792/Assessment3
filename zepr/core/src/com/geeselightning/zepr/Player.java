@@ -82,6 +82,7 @@ public class Player extends Character {
             HPMult = 1;
             speedMult = 1;
         }
+        
         this.attackDamage = (int)(Constant.PLAYERDMG * dmgMult);
         this.speed = (int)(Constant.PLAYERSPEED * speedMult);
         this.health = (int)(HPMult * Constant.PLAYERMAXHP);
@@ -92,7 +93,6 @@ public class Player extends Character {
             attackTexture = new Texture("player01_attack.png");
             this.setTexture(mainTexture);
         } else if (playertype == "sporty") {
-            // playertype == sporty
             mainTexture = new Texture("player02.png");
             attackTexture = new Texture("player02_attack.png");
             this.setTexture(mainTexture);
