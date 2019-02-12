@@ -49,6 +49,11 @@ public final class Constant {
     public static final int BOSS1RANGE = 30; //First boss' attack range
     public static final float BOSS1SPEED = 50; //First boss' speed
     public static final float BOSS1COOLDOWN = 2.0f; //First boss' attack cooldown
+    public static final int BOSS2MAXHP = 1500; //Second boss' max hp
+    public static final int BOSS2DMG = 75; //Second boss' dmg
+    public static final int BOSS2RANGE = 30; //Second boss' attack range
+    public static final float BOSS2SPEED = 80; //Second boss' speed
+    public static final float BOSS2COOLDOWN = 2.5f; //Second boss' hit cooldown
     
     //Powerup constants
     public static final int HEALUP = 30; //Heal powerup amount

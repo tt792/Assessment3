@@ -24,25 +24,42 @@ import java.util.Random;
 public class Level implements Screen {
 
     protected Zepr parent;
-    private TiledMap map;
-    private OrthogonalTiledMapRenderer renderer;
-    private OrthographicCamera camera;
+    private ZeprInputProcessor inputProcessor = new ZeprInputProcessor();
+    
+    //Level characters
     private Player player;
     protected ArrayList<Zombie> aliveZombies = new ArrayList<Zombie>();
+    
+    //Map variables
+    private TiledMap map;
     private String mapLocation;
     private Vector2 playerSpawn;
-    public ArrayList<Vector2> zombieSpawnPoints;
-    private ZeprInputProcessor inputProcessor = new ZeprInputProcessor();
-    protected boolean isPaused;
+    
+    //Wave variables
+    private int[] waves;
+    private int currentWave = 1;
+    protected int zombiesRemaining;
+    private int zombiesToSpawn; 
+    private boolean boss1Spawned = false;
+    private boolean boss2Spawned = false;
+    
+    //Rendering variables
+    private OrthogonalTiledMapRenderer renderer;
+    private OrthographicCamera camera;
+    
+    //UI variables
     private Stage stage;
     private Table table;
     private Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
-    private int[] waves;
-    private int currentWave = 1;
-    protected int zombiesRemaining; // the number of zombies left to kill to complete the wave
-    private int zombiesToSpawn; // the number of zombies that are left to be spawned this wave
+    protected boolean isPaused;
     private boolean pauseButton = false;
-    private boolean bossSpawned = false; 
+    Label progressLabel = new Label("", skin);
+    Label healthLabel = new Label("", skin);
+    Label pointsLabel = new Label("", skin);
+    Label powerupLabel = new Label("", skin);    
+    Texture blank;
+    
+    //Powerup effects
 	Texture shield = new Texture("shield.png");
 	Sprite shieldSprite = new Sprite(shield);
 	Texture fast = new Texture("fast.png");
@@ -52,27 +69,29 @@ public class Level implements Screen {
 	Texture kb = new Texture("knockbackEffect.png");
 	Sprite kbSprite = new Sprite(kb);
    
-    //minigame variables
+    //Minigame variables
     private Rock[] rockList = new Rock[0]; //create the empty list of rocks
     private float timer = 0f; //time the minigame
     private int minigameHealth = 50; //the players health while in the minigame
     private int rockSpawn = 0; //when to spawn a rock
     
-    
-    Texture blank;
+    //Powerup Variables
     Vector2 powerSpawn;
     PowerUp currentPowerUp = null;
-
-    Label progressLabel = new Label("", skin);
-    Label healthLabel = new Label("", skin);
-    Label pointsLabel = new Label("", skin);
-    Label powerupLabel = new Label("", skin);
-    //for the regular game
-    public Level(Zepr zepr, String mapLocation, Vector2 playerSpawn, ArrayList<Vector2> zombieSpawnPoints, int[] waves, Vector2 powerSpawn) {
+    
+    /**
+     * Creates a new level with the given parameters
+     * 
+     * @param zepr The given Zepr
+     * @param mapLocation The path to the map of the level i.e. "C:/map.tmx
+     * @param playerSpawn A 2-Dimensional Vector holding the player's spawn point
+     * @param waves An array containing the numbers of zombies to spawn on each wave
+     * @param powerSpawn A 2-Dimensional Vector holding the location at which the powerup should spawn
+     */
+    public Level(Zepr zepr, String mapLocation, Vector2 playerSpawn, int[] waves, Vector2 powerSpawn) {
         parent = zepr;
         this.mapLocation = mapLocation;
         this.playerSpawn = playerSpawn;
-        this.zombieSpawnPoints = zombieSpawnPoints;
         this.isPaused = false;
         this.blank = new Texture("blank.png");
         this.powerSpawn = powerSpawn;
@@ -91,12 +110,13 @@ public class Level implements Screen {
         stage.addActor(table);
     }
     
-    //for the minigame
+    /**
+     * A modified creator for use in the minigame
+     */
     public Level(Zepr zepr, String mapLocation, Vector2 playerSpawn) {
     	parent = zepr;
     	this.mapLocation = mapLocation;
     	this.playerSpawn = playerSpawn;
-    	this.zombieSpawnPoints = null;
     	this.isPaused = false;
     	this.stage = new Stage(new ScreenViewport());
     	this.table = new Table();
@@ -146,15 +166,19 @@ public class Level implements Screen {
      * @return the number of zombies that failed to spawn
      */
     public int spawnZombies(int amount) {
+    	//The number of unspawned zombies
+    	//This is returned at the end of the function
         int notSpawned = 0;
         
+        //For loop which spawns the provided amount of zombies
         for (int i = 0; i < amount; i++) {
+        	//A new zombie
         	Zombie zombie;
         	
         	//Create a new RNG for use in this function
         	Random rand = new Random();
         	
-        	//Create a random spawnpoint
+        	//Create a new spawnpoint
         	boolean foundSpawn = false;
         	Vector2 spawnPoint = new Vector2();
         	
@@ -174,16 +198,25 @@ public class Level implements Screen {
         	//n is the chance for a zombie to be a special zombie
         	int n = rand.nextInt(1000);
         	
-        	if (((Zepr.progress == Zepr.COURTYARD && currentWave == 3) || (Zepr.progress == Zepr.LAW && currentWave == 3))&& !bossSpawned) { //change to spawn on the 3rd level instead
+        	//If we are on the 3rd level and on the 3rd wave then spawn the first boss 
+        	if ((Zepr.progress == Zepr.COURTYARD && currentWave == 3) && !boss1Spawned) {
         		zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
         				spawnPoint, this, Constant.BOSS1DMG, Constant.BOSS1RANGE, Constant.BOSSPOINTS, Constant.BOSS1MAXHP, Constant.BOSS1SPEED, Constant.BOSS1COOLDOWN, "BOSS1"));
-        		bossSpawned = true;
+        		boss1Spawned = true;
         		zombie.scale(2);
         	}
+        	//Else if we are on the 6th level and on the 3rd wave then spawn the second boss
+        	else if ((Zepr.progress == Zepr.LAW && currentWave == 3) && !boss2Spawned) {
+        		zombie = (new Zombie(new Sprite(new Texture("bossGooseleft.png")),
+        				spawnPoint, this, Constant.BOSS2DMG, Constant.BOSS2RANGE, Constant.BOSSPOINTS, Constant.BOSS2MAXHP, Constant.BOSS2SPEED, Constant.BOSS1COOLDOWN, "BOSS1"));
+        		boss2Spawned = true;
+        		zombie.scale(2);
+        	}
+        	//Otherwise
         	else {
         		
 	        	//If the random number is less than the chance to spawn a special zombie
-	        	if (n <= Constant.SPECIALCHANCE * Zepr.progress) { ///change back to else if
+	        	if (n <= Constant.SPECIALCHANCE * Zepr.progress) {
 	        		int m = rand.nextInt(2);
 	        		
 	        		if(m == 1) //Create a fast zombie
@@ -193,7 +226,8 @@ public class Level implements Screen {
 	        			zombie = (new Zombie(new Sprite(new Texture("zombie03.png")),
 	        					spawnPoint, this, Constant.TANKDMG, Constant.TANKRANGE, Constant.SPECIALPOINTS, Constant.TANKMAXHP, Constant.TANKSPEED, Constant.TANKCOOLDOWN, "TANK"));
 	        	}
-	        	else {
+	        	else { //If it isn't a special zombie
+	        		//Spawn a regular zombie
 	        		zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
 	        				spawnPoint, this, Constant.ZOMBIEDMG, Constant.ZOMBIERANGE, Constant.ZOMBIEPOINTS, Constant.ZOMBIEMAXHP, Constant.ZOMBIESPEED, Constant.ZOMBIEHITCOOLDOWN, "ZOMB"));
 	        	}

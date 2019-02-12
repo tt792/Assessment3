@@ -13,16 +13,16 @@ public class Zepr extends Game {
 	public static int progress = 3;
 
 	//the different screens in the game
-	public final static int MENU = 0;
-	public final static int SELECT = 2;
-	public final static int TOWN = 3; //level 1
-	public final static int HALIFAX = 4; //level 2
-	public final static int COURTYARD = 5; //level 3 - BOSS
-	public final static int MINIGAME = 6; //The minigame
-	public final static int COMPSCI= 7; //level 4
-	public final static int OUTSIDE = 8; //level 5
-	public final static int LAW = 9; //level 6 - BOSS2
-	public final static int COMPLETE = 10; //the completed level screen
+	public final static int MENU = -1;
+	public final static int SELECT = 0;
+	public final static int TOWN = 1; //level 1
+	public final static int HALIFAX = 2; //level 2
+	public final static int COURTYARD = 3; //level 3 - BOSS
+	public final static int MINIGAME = 4; //The minigame
+	public final static int COMPSCI= 5; //level 4
+	public final static int OUTSIDE = 6; //level 5
+	public final static int LAW = 7; //level 6 - BOSS2
+	public final static int COMPLETE = 8; //the completed level screen
 
 
 	public void changeScreen(int screen) {

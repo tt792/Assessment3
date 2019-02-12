@@ -10,28 +10,29 @@ import static java.lang.Math.abs;
 
 public class Character extends Sprite {
 
-    Vector2 velocity = new Vector2(); // 2D vector
-    public float speed;
-    int health = 100;
-    // direction is a bearing in radians
-    double direction = 0;
+	int health = 100;
+	
+	public float speed;
+	float hitRefresh = 2; // All characters start ready to hit.
+	
+	double direction = 0; // Direction is a bearing in radians
+	
     Level currentLevel;
-    // All characters start ready to hit.
-    float hitRefresh = 2;
-
+    
+	Vector2 velocity = new Vector2(); // 2D vector
+    
+	/***
+	 * Creates a new character
+	 * 
+	 * @param sprite The sprite that represents the character
+	 * @param spawn A 2-Dimensional vector representing where the character will spawn
+	 * @param currentLevel The level that the character is on
+	 */
     public Character(Sprite sprite, Vector2 spawn, Level currentLevel) {
         super(sprite);
         setX(spawn.x);
         setY(spawn.y);
         this.currentLevel = currentLevel;
-    }
-    
-    public double getDirection() {
-        return direction;
-    }
-
-    public double getHealth() {
-        return health;
     }
 
     /**
@@ -152,6 +153,14 @@ public class Character extends Sprite {
     // Decreases health by value of dmg
     public void takeDamage(int dmg){
         health -= dmg;
+    }
+    
+    public double getDirection() {
+        return direction;
+    }
+
+    public double getHealth() {
+        return health;
     }
 
 }
