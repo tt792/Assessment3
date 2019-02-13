@@ -61,7 +61,7 @@ public class SelectCharacterScreen implements Screen {
         
         // Creating menu buttons and label to show player's current stage
         Label currentStageLabel = new Label("Current stage: " + currentStage, skin, "title");
-        currentStageLabel.setFontScale(0.75f);
+        currentStageLabel.setFontScale(0.4f);
         TextButton load = new TextButton("Load", skin);
         TextButton save = new TextButton("Save", skin);
         TextButton back = new TextButton("<--", skin);
@@ -95,7 +95,7 @@ public class SelectCharacterScreen implements Screen {
         characterSelectTable.add(chooseYourCharacterLabel).colspan(4).padBottom(5);
         characterSelectTable.row();
         characterSelectTable.add(currentChosenCharacterImage).size(375).padRight(5);
-        if (Zepr.progress == 3) {
+        if (Zepr.progress == 1) {
 	        characterSelectTable.add(nerdy).pad(5);
 	        characterSelectTable.add(jock).pad(5);
 	        characterSelectTable.add(artsy).pad(5);
@@ -131,7 +131,7 @@ public class SelectCharacterScreen implements Screen {
        
         
         bottomTable.row();
-        if (Zepr.progress == 3) {
+        if (Zepr.progress == 1) {
         	bottomTable.add(ucas).pad(10).left();
         }
         bottomTable.add(characterDescription);
@@ -332,7 +332,8 @@ public class SelectCharacterScreen implements Screen {
     @Override
     public void render(float delta) {
         // Clears the screen to black.
-    		Gdx.gl.glClearColor(0.11f, 0.29f, 0.004f, 1f);
+    	//Gdx.gl.glClearColor(0.11f, 0.29f, 0.004f, 1f);
+    	Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // Draws the stage.
