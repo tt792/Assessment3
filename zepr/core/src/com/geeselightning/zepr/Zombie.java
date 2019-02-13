@@ -6,10 +6,14 @@ import com.badlogic.gdx.math.Vector2;
 public class Zombie extends Character {
 
     private Player player = Player.getInstance();
+    
+    //Combat variables
     float hitCooldown;
     int attackDamage;
     int points;
     public int hitRange;
+
+    //Type of Zombie (0=Normal, 1=Fast, 2=Tank)
     public String type;
     
     boolean hit = false;

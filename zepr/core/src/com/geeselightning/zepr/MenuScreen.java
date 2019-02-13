@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 public class MenuScreen implements Screen {
 
     private Zepr parent;
+    
     private Stage stage;
     private Label titleLabel;
 
