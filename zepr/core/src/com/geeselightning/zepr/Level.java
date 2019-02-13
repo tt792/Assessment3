@@ -184,14 +184,20 @@ public class Level implements Screen {
         	
         	//Until we find a spawnpoint
         	while(!foundSpawn) {
-        		//Generate a random x and y coordinate between 50 and 800
-        		int x = rand.nextInt(800) + 50;
-        		int y = rand.nextInt(800) + 50;
+        		//Generate a random x and y coordinate between 50 and 700
+        		int x = rand.nextInt(700) + 50;
+        		int y = rand.nextInt(700) + 50;
         		
         		//If that cell is not blocked then set the spawnpoint to that cell
-        		if (!isBlocked(x, y) && !isBlocked(x + 32, y + 32) && !isBlocked(x - 32, y - 32)) {
-        			spawnPoint = new Vector2(x, y);
-        			foundSpawn = true;
+        		if(((Zepr.progress == Zepr.COURTYARD && currentWave == 3) && !boss1Spawned) || ((Zepr.progress == Zepr.LAW && currentWave == 3) && !boss2Spawned)) {
+        			if ((!isBlocked(x, y) && !isBlocked(x + 64, y + 64) && !isBlocked(x - 64, y - 64))) {
+            			spawnPoint = new Vector2(x, y);
+            			foundSpawn = true;
+        			}
+        		}
+    			else if ((!isBlocked(x, y) && !isBlocked(x + 32, y + 32) && !isBlocked(x - 32, y - 32))) {
+    			spawnPoint = new Vector2(x, y);
+    			foundSpawn = true;
         		}
         	}
 
