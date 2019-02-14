@@ -1,8 +1,6 @@
 package com.geeselightning.zepr;
 
 import com.badlogic.gdx.math.Vector2;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class CourtyardLevel extends Level {
 
@@ -20,8 +18,8 @@ public class CourtyardLevel extends Level {
     @Override
     public void complete() {
         // Update progress
-        if (parent.progress == parent.COURTYARD) {
-            parent.progress = parent.MINIGAME;
+        if (Zepr.progress == Zepr.COURTYARD) {
+            Zepr.progress = Zepr.MINIGAME;
         }
         // The stage is being replayed
     }

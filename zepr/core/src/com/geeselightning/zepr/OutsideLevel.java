@@ -1,8 +1,6 @@
 package com.geeselightning.zepr;
 
 import com.badlogic.gdx.math.Vector2;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class OutsideLevel extends Level {
 
@@ -20,8 +18,8 @@ public class OutsideLevel extends Level {
     @Override
     public void complete() {
         // Update progress
-        if (parent.progress == parent.OUTSIDE) {
-            parent.progress = parent.LAW;
+        if (Zepr.progress == Zepr.OUTSIDE) {
+            Zepr.progress = Zepr.LAW;
         }
         // The stage is being replayed
     }

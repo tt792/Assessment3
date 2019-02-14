@@ -399,11 +399,12 @@ public class Level implements Screen {
 	                    // If stage is being replayed complete() will stop progress being incremented.
 	                    isPaused = true;
 	                    complete(); //what does this do? how to increment the level?
-	                    if (parent.progress == parent.COMPLETE) {
+	                    if (Zepr.progress == Zepr.COMPLETE) {
 	                        parent.setScreen(new TextScreen(parent, "Game completed."));
 	                    } else {
 	                        parent.setScreen(new TextScreen(parent, "Level completed."));
 	                    }
+	                    
 	                } else {
 	                    // Update zombiesRemaining with the number of zombies of the new wave
 	                    zombiesRemaining = waves[currentWave - 1];
@@ -637,14 +638,24 @@ public class Level implements Screen {
 
     @Override
     public void dispose() {
+    	if (skin != null) {
         skin.dispose();
+    	}
+    	if (stage != null) {
         stage.dispose();
+    	}
+    	if (map != null) {
         map.dispose();
+    	}
+    	if (renderer != null) {
         renderer.dispose();
+    }
         if (currentPowerUp != null) {
             currentPowerUp.getTexture().dispose();
         }
+        if (player != null) {
         player.getTexture().dispose();
+        }
         for (Zombie zombie : aliveZombies) {
             zombie.getTexture().dispose();
         }

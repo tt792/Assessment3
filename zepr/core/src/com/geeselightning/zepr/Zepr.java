@@ -24,6 +24,10 @@ public class Zepr extends Game {
 	public final static int LAW = 7; //level 6 - BOSS2
 	public final static int COMPLETE = 8; //the completed level screen
 
+	
+	public Zepr() {
+		System.out.println("Created a ZEPR");
+	}
 
 	public void changeScreen(int screen) {
 		switch(screen) {
@@ -36,30 +40,39 @@ public class Zepr extends Game {
 				this.setScreen(selectCharacterScreen);
 				break;
 			case TOWN:
+				level.dispose();
+				System.out.println("town");
 				level = new TownLevel(this);
 				this.setScreen(level);
 				break;
 			case HALIFAX:
+				level.dispose();
+				System.out.println("halifax");
 				level = new HalifaxLevel(this);
 				this.setScreen(level);
 				break;
 			case COURTYARD: //make sure this only spawns the boss
+				level.dispose();
 				level = new CourtyardLevel(this);
 				this.setScreen(level);
 				break;
 			case MINIGAME:
+				level.dispose();
 				level = new MinigameLevel(this);
 				this.setScreen(level);
 				break;
 			case COMPSCI:
+				level.dispose();
 				level = new CompSciLevel(this);
 				this.setScreen(level);
 				break;
 			case OUTSIDE:
+				level.dispose();
 				level = new OutsideLevel(this);
 				this.setScreen(level);
 				break;
 			case LAW: //make sure this only spawns the boss also
+				level.dispose();
 				level =  new LawLevel(this);
 				this.setScreen(level);
 				break;
@@ -69,6 +82,8 @@ public class Zepr extends Game {
 	@Override
 	public void create() {
 		loadingScreen = new LoadingScreen(this);
+		selectCharacterScreen = new SelectCharacterScreen(this);
+		level = new TownLevel(this);
 		setScreen(loadingScreen);
 	}
 }

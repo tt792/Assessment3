@@ -14,8 +14,8 @@ public class MinigameLevel extends Level {
     @Override
     public void complete() {
         // Update progress
-        if (parent.progress == parent.MINIGAME) {
-            parent.progress = parent.COMPSCI;
+        if (Zepr.progress == Zepr.MINIGAME) {
+            Zepr.progress = Zepr.COMPSCI;
         }
         // The stage is being replayed
     }

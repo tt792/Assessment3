@@ -1,8 +1,6 @@
 package com.geeselightning.zepr;
 
 import com.badlogic.gdx.math.Vector2;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class CompSciLevel extends Level {
 
@@ -20,8 +18,8 @@ public class CompSciLevel extends Level {
     @Override
     public void complete() {
         // Update progress
-        if (parent.progress == parent.COMPSCI) {
-            parent.progress = parent.OUTSIDE;
+        if (Zepr.progress == Zepr.COMPSCI) {
+            Zepr.progress = Zepr.OUTSIDE;
         }
         // The stage is being replayed
     }
