@@ -83,7 +83,8 @@ public class SelectCharacterScreen implements Screen {
         final TextButton nerdy = new TextButton("Nerd", skin);
         final TextButton jock = new TextButton("Jock", skin);
         final TextButton artsy = new TextButton("Artsy", skin); // not yet operational
-        currentChosenCharacterImage = new Image(new Texture("placeholderHAHA.png"));
+        currentChosenCharacterImage = new Image(new Texture("player1sprite.png"));
+        nerdy.setColor(Color.GOLD);
         
         // displaying player selection buttons
         Table characterSelectTable = new Table();
@@ -104,7 +105,7 @@ public class SelectCharacterScreen implements Screen {
         
         // creating the button to begin playing the main game , character descriptions, mini-game button
         TextButton play = new TextButton("Start!", skin);
-        TextButton ucas = new TextButton("Ucas Mode", skin);
+        TextButton ucas = new TextButton("UCAS mode", skin);
         
         final String nerdyDescription = "\"build all the things!\"";
         final String sportyDescripton = "\"GOTTA GO FAST\"";
@@ -140,37 +141,30 @@ public class SelectCharacterScreen implements Screen {
         //set the stage to be the town (1st stage)
       		switch(Zepr.progress) {
       		case Zepr.TOWN:
-      	       // stageDescription.setText(townDescription);
       	        stageLink = Zepr.TOWN;
       	        currentStage = "TOWN";
       			break;
       		case Zepr.HALIFAX:
-      	       // stageDescription.setText(halifaxDescription);
       	        stageLink = Zepr.HALIFAX;
       	      currentStage = "HALIFAX";
       			break;
       		case Zepr.COURTYARD:
-      	       // stageDescription.setText(courtyardDescription);
       	        stageLink = Zepr.COURTYARD;
       	      currentStage = "COURTYARD";
       			break;
       		case Zepr.MINIGAME:
-      	        //stageDescription.setText(townDescription);
       	        stageLink = Zepr.MINIGAME;
       	      currentStage = "MINIGAME";
       			break;
       		case Zepr.COMPSCI:
-      	        //stageDescription.setText(townDescription);
       	        stageLink = Zepr.COMPSCI;
       	      currentStage = "COMPSCI";
       			break;
       		case Zepr.OUTSIDE:
-      	        //stageDescription.setText(townDescription);
       	        stageLink = Zepr.OUTSIDE;
       	        currentStage = "OUTSIDE";
       			break;
       		case Zepr.LAW:
-      			//stageDescription.setText(lawDescription);
       			stageLink = Zepr.LAW;
       			currentStage = "LAW";
       			break;
@@ -297,7 +291,7 @@ public class SelectCharacterScreen implements Screen {
         		String path = Gdx.files.getLocalStoragePath() + "data/saveFile.txt";
         		String saveData = new String(player.getType() + ":" + Zepr.progress);
         		File file = new File(path);
-        		if (!file.exists()) { //if the file doesnt exists
+        		if (!file.exists()) { //if the file doesn't exist
         			File createFile = new File(path);
         			try {
 						createFile.createNewFile();
@@ -331,11 +325,10 @@ public class SelectCharacterScreen implements Screen {
 	
     @Override
     public void render(float delta) {
-        // Clears the screen to black.
-    	//Gdx.gl.glClearColor(0.11f, 0.29f, 0.004f, 1f);
-    	Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1f);
+    	//Gdx.gl.glClearColor(0.11f, 0.29f, 0.004f, 1f);   makes the background green (apparently its ugly)
+    	Gdx.gl.glClearColor(22/255f, 32/255f, 37/255f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        
         // Draws the stage.
         this.stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         this.stage.draw();
