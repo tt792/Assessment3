@@ -8,7 +8,7 @@ public class PowerUpStrength extends PowerUp {
     public float timeRemaining = Constant.STRENGTHTIME;
 
     public PowerUpStrength(Level currentLevel) {
-        super(4, new Texture("strengthTemp.png"), currentLevel);
+        super(4, new Texture("strength.png"), currentLevel);
     }
 
     @Override

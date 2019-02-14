@@ -8,7 +8,7 @@ public class PowerUpKnockback extends PowerUp {
     public float timeRemaining = Constant.KNOCKBACKTIME;
 
     public PowerUpKnockback(Level currentLevel) {
-        super(5, new Texture("knockbackTemp.png"), currentLevel);
+        super(5, new Texture("knockback.png"), currentLevel);
     }
 
     @Override

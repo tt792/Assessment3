@@ -62,9 +62,9 @@ public class Level implements Screen {
     //Powerup effects
 	Texture shield = new Texture("shield.png");
 	Sprite shieldSprite = new Sprite(shield);
-	Texture fast = new Texture("fast.png");
+	Texture fast = new Texture("speedUpEffect.png");
 	Sprite fastSprite = new Sprite(fast);
-	Texture stronk = new Texture("stronk.png");
+	Texture stronk = new Texture("strengthEffect.png");
 	Sprite stronkSprite = new Sprite(stronk);
 	Texture kb = new Texture("knockbackEffect.png");
 	Sprite kbSprite = new Sprite(kb);
@@ -206,7 +206,7 @@ public class Level implements Screen {
         	
         	//If we are on the 3rd level and on the 3rd wave then spawn the first boss 
         	if ((Zepr.progress == Zepr.COURTYARD && currentWave == 3) && !boss1Spawned) {
-        		zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
+        		zombie = (new Zombie(new Sprite(new Texture("bossJJ.png")),
         				spawnPoint, this, Constant.BOSS1DMG, Constant.BOSS1RANGE, Constant.BOSSPOINTS, Constant.BOSS1MAXHP, Constant.BOSS1SPEED, Constant.BOSS1COOLDOWN, "BOSS1"));
         		boss1Spawned = true;
         		zombie.scale(2);
