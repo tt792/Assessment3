@@ -19,7 +19,6 @@ package com.geeselightning.zepr.tests;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.geeselightning.zepr.Zepr;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.BlockJUnit4ClassRunner;

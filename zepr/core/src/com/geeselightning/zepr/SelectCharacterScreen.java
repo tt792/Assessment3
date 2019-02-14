@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
@@ -34,7 +35,6 @@ public class SelectCharacterScreen implements Screen {
     private String currentStage;
     private boolean playerSet = false;
     Player player = Player.getInstance();
-    private Label characterDescription;
     private String playerType = "nerdy";
     
     private int stageLink = -1;

@@ -40,39 +40,39 @@ public class Zepr extends Game {
 				this.setScreen(selectCharacterScreen);
 				break;
 			case TOWN:
-				level.dispose();
+				level = null;
 				System.out.println("town");
 				level = new TownLevel(this);
 				this.setScreen(level);
 				break;
 			case HALIFAX:
-				level.dispose();
+				level = null;
 				System.out.println("halifax");
 				level = new HalifaxLevel(this);
 				this.setScreen(level);
 				break;
 			case COURTYARD: //make sure this only spawns the boss
-				level.dispose();
+				level = null;
 				level = new CourtyardLevel(this);
 				this.setScreen(level);
 				break;
 			case MINIGAME:
-				level.dispose();
+				level = null;
 				level = new MinigameLevel(this);
 				this.setScreen(level);
 				break;
 			case COMPSCI:
-				level.dispose();
+				level = null;
 				level = new CompSciLevel(this);
 				this.setScreen(level);
 				break;
 			case OUTSIDE:
-				level.dispose();
+				level = null;
 				level = new OutsideLevel(this);
 				this.setScreen(level);
 				break;
 			case LAW: //make sure this only spawns the boss also
-				level.dispose();
+				level = null;
 				level =  new LawLevel(this);
 				this.setScreen(level);
 				break;

@@ -401,8 +401,10 @@ public class Level implements Screen {
 	                    complete(); //what does this do? how to increment the level?
 	                    if (Zepr.progress == Zepr.COMPLETE) {
 	                        parent.setScreen(new TextScreen(parent, "Game completed."));
+	                        dispose();
 	                    } else {
 	                        parent.setScreen(new TextScreen(parent, "Level completed."));
+	                        dispose();
 	                    }
 	                    
 	                } else {
@@ -641,15 +643,9 @@ public class Level implements Screen {
     	if (skin != null) {
         skin.dispose();
     	}
-    	if (stage != null) {
-        stage.dispose();
-    	}
     	if (map != null) {
         map.dispose();
     	}
-    	if (renderer != null) {
-        renderer.dispose();
-    }
         if (currentPowerUp != null) {
             currentPowerUp.getTexture().dispose();
         }
