@@ -2,6 +2,9 @@ package com.geeselightning.zepr;
 
 import com.badlogic.gdx.Game;
 
+/**
+ * @implementation (F1) Controls flow of the game, changing levels when the player completes one
+ */
 public class Zepr extends Game {
 
 	private LoadingScreen loadingScreen;
@@ -9,7 +12,7 @@ public class Zepr extends Game {
 	private Level level;
 	private SelectCharacterScreen selectCharacterScreen;
 
-	// The progress is the integer representing the last level completed. i.e. 3 for Town
+	// The progress is the integer representing the last level completed. i.e. 1 for Town
 	public static int progress = 1;
 
 	//the different screens in the game
@@ -24,11 +27,6 @@ public class Zepr extends Game {
 	public final static int LAW = 7; //level 6 - BOSS2
 	public final static int COMPLETE = 8; //the completed level screen
 
-	
-	public Zepr() {
-		System.out.println("Created a ZEPR");
-	}
-
 	public void changeScreen(int screen) {
 		switch(screen) {
 			case MENU:
@@ -41,13 +39,11 @@ public class Zepr extends Game {
 				break;
 			case TOWN:
 				level = null;
-				System.out.println("town");
 				level = new TownLevel(this);
 				this.setScreen(level);
 				break;
 			case HALIFAX:
 				level = null;
-				System.out.println("halifax");
 				level = new HalifaxLevel(this);
 				this.setScreen(level);
 				break;

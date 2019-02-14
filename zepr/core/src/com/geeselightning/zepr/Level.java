@@ -87,6 +87,8 @@ public class Level implements Screen {
      * @param playerSpawn A 2-Dimensional Vector holding the player's spawn point
      * @param waves An array containing the numbers of zombies to spawn on each wave
      * @param powerSpawn A 2-Dimensional Vector holding the location at which the powerup should spawn
+     * 
+     * @implementation (F1) used to control the clow of a level while the user is playing
      */
     public Level(Zepr zepr, String mapLocation, Vector2 playerSpawn, int[] waves, Vector2 powerSpawn) {
         parent = zepr;
@@ -112,6 +114,11 @@ public class Level implements Screen {
     
     /**
      * A modified creator for use in the minigame
+     * @param zepr the given Zepr
+     * @param mapLocation the location of this map in files
+     * @param playerSpawn where the player spawns
+     * 
+     * @implementation (F1) sets up the level
      */
     public Level(Zepr zepr, String mapLocation, Vector2 playerSpawn) {
     	parent = zepr;
@@ -164,6 +171,8 @@ public class Level implements Screen {
      * @param amount number of zombies to spawn
      *
      * @return the number of zombies that failed to spawn
+     * 
+     * @implementation (F2) Spawns more harder zombies as the game progresses
      */
     public int spawnZombies(int amount) {
     	//The number of unspawned zombies
@@ -316,6 +325,10 @@ public class Level implements Screen {
         Gdx.input.setInputProcessor(inputProcessor);
     }
 
+    /**
+     * @implementation (F1) Spawns zombies, controls drawing of sprites in the game and controls the flow of the game
+     * @implementation (F5) Sets up the minigame and controls the minigame level
+     */
     @Override
     public void render(float delta) { //if the game is not in the minigame act normally, if its the minigame then do something else
         if (isPaused) {
@@ -363,7 +376,7 @@ public class Level implements Screen {
             stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
             stage.draw();
         } else {
-        	if (Zepr.progress != Zepr.MINIGAME) { //if in the non minigame <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        	if (Zepr.progress != Zepr.MINIGAME) { //if in the non minigame
 	            // Clears the screen to black.
 	            Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 	            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -544,13 +557,13 @@ public class Level implements Screen {
 	            table.add(powerupLabel);
 	            stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 	            stage.draw();
-	        } else if (Zepr.progress == Zepr.MINIGAME) { //if its the minigame
+	        } else if (Zepr.progress == Zepr.MINIGAME) { //if in the minigame
 	            // Clears the screen to black.
 	            Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 	            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	            timer += Gdx.graphics.getDeltaTime();
 	            table.clear();
-	            if(rockSpawn == 4) {
+	            if(rockSpawn == 10) { //==4
 	            	generateRock(); //add a new rock every frame
 	            	rockSpawn = 0;
 	            }
