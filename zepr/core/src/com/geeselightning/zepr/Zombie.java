@@ -18,6 +18,11 @@ public class Zombie extends Character {
     
     boolean hit = false;
 
+    /**
+     * Constructor for the Zombie Class
+     * @implementation (F4) creates the zombies for the start of a level
+     * @implementation (F7) creates the bosses for the last wave of levels 3 and 6
+     */
     public Zombie(Sprite sprite, Vector2 zombieSpawn, Level currentLevel, int attackDamage, int hitRange, int points, int health, float speed, float hitCooldown, String type) {
         super(sprite, zombieSpawn, currentLevel);
         this.attackDamage = attackDamage;

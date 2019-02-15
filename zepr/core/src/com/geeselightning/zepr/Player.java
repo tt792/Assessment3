@@ -31,7 +31,9 @@ public class Player extends Character {
     	points += givenPoints;
     }
 
-
+    /**
+     * @implementation (F3) Creates the player on a new game
+     */
     private Player(Sprite sprite, Vector2 playerSpawn) {
         super(sprite, playerSpawn, null);
     }
@@ -58,7 +60,9 @@ public class Player extends Character {
             hitRefresh += delta;
         }
     }
-
+    /**
+     * @implementation (F3) Creates the player on a respawn
+     */
     public void respawn(Vector2 playerSpawn, Level level){
         setX(playerSpawn.x);
         setY(playerSpawn.y);

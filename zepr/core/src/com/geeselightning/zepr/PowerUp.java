@@ -4,6 +4,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 
+/**
+ * @implementation (F6) Initialises the powerups and used as parent of the individual powerup classes
+ */
 public class PowerUp extends Sprite {
 
     Player player = Player.getInstance();
@@ -32,7 +35,10 @@ public class PowerUp extends Sprite {
             currentLevel.currentPowerUp = null;
         }
     }
-
+    
+    /**
+     * @implementation (F6) Controls when the player gets a powerup
+     */
     public boolean overlapsPlayer(){
         Rectangle rectanglePlayer = player.getBoundingRectangle();
         Rectangle rectanglePower = this.getBoundingRectangle();

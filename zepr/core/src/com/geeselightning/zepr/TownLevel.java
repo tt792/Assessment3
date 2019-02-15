@@ -15,6 +15,9 @@ public class TownLevel extends Level {
         super(zepr, mapLocation, playerSpawn, waves, powerSpawn);
     }
 
+    /**
+     * @implementation (F1) Controls which level is after this one
+     */
     @Override
     public void complete() {
         if (Zepr.progress == Zepr.TOWN) {

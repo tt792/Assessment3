@@ -14,7 +14,10 @@ public class CourtyardLevel extends Level {
     public CourtyardLevel(Zepr zepr) {
         super(zepr, mapLocation, playerSpawn, waves, powerSpawn);
     }
-
+    
+    /**
+     * @implementation (F1) Controls which level is after this one
+     */
     @Override
     public void complete() {
         // Update progress

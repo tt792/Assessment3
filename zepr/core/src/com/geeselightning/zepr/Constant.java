@@ -2,6 +2,12 @@ package com.geeselightning.zepr;
 
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * @implementation (F3) Stores the constants for creating the players
+ * @implementation (F4) Stores the constants for creating the zombies
+ * @implementation (F6) Stores the constants for creating the powerups
+ * @implementation (F7) Stores the constants for creating the bosses
+ */
 public final class Constant {
     public static final Vector2 ORIGIN = new Vector2(0, 0);
     

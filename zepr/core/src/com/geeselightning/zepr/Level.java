@@ -88,7 +88,7 @@ public class Level implements Screen {
      * @param waves An array containing the numbers of zombies to spawn on each wave
      * @param powerSpawn A 2-Dimensional Vector holding the location at which the powerup should spawn
      * 
-     * @implementation (F1) used to control the clow of a level while the user is playing
+     * @implementation (F1) used to control the flow of a level while the user is playing
      */
     public Level(Zepr zepr, String mapLocation, Vector2 playerSpawn, int[] waves, Vector2 powerSpawn) {
         parent = zepr;
@@ -173,6 +173,7 @@ public class Level implements Screen {
      * @return the number of zombies that failed to spawn
      * 
      * @implementation (F2) Spawns more harder zombies as the game progresses
+     * @implementation (F4) Spawns the 3 different types of zombies
      */
     public int spawnZombies(int amount) {
     	//The number of unspawned zombies
@@ -328,6 +329,8 @@ public class Level implements Screen {
     /**
      * @implementation (F1) Spawns zombies, controls drawing of sprites in the game and controls the flow of the game
      * @implementation (F5) Sets up the minigame and controls the minigame level
+     * @implementation (F6) Spawns the powerups into the level
+     * @implementation (F7) Spawns the bosses on levels 3 and 6
      */
     @Override
     public void render(float delta) { //if the game is not in the minigame act normally, if its the minigame then do something else

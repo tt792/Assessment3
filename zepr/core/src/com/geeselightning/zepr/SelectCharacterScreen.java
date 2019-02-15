@@ -49,6 +49,9 @@ public class SelectCharacterScreen implements Screen {
         this.stage = new Stage(new ScreenViewport());
     }
 
+    /**
+     * @implementation (F3) Creates and displays the buttons for the player selection
+     */
     @Override
     public void show() {
         // Send any input from the user to the stage.
