@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.geeselightning.zepr.Constant;
 import com.geeselightning.zepr.Player;
+import com.geeselightning.zepr.Rock;
 import com.geeselightning.zepr.Zombie;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,11 +40,14 @@ public class PlayerTest {
     // Test 2.2.2
     public void playerDoesDamageToZombieWhenInRange() {
         Player player = Player.getInstance();
-
-        Zombie zombie = new Zombie(new Sprite(), new Vector2(player.getCenter().x, player.getCenter().y  + 5), null, Constant.ZOMBIEDMG, Constant.ZOMBIERANGE, Constant.ZOMBIEPOINTS, Constant.ZOMBIEMAXHP, Constant.ZOMBIESPEED,Constant.ZOMBIEHITCOOLDOWN, "Normal");
+        
+        Zombie zombie = new Zombie(new Sprite(), new Vector2(player.getCenter().x, player.getCenter().y), null, Constant.ZOMBIEDMG, Constant.ZOMBIERANGE, Constant.ZOMBIEPOINTS, Constant.ZOMBIEMAXHP, Constant.ZOMBIESPEED,Constant.ZOMBIEHITCOOLDOWN, "Normal");
         double originalHealth = zombie.getHealth();
+        int ogPoints = player.getPoints();
         player.attack(zombie, 0);
-
+        //zombie not dead - no points 
+        assertEquals(player.getPoints(),ogPoints);
+                
         assertNotEquals("Zombie within range should take damage when the player attacks.",
                 zombie.getHealth(), originalHealth, 0.1);
     }
@@ -62,19 +66,27 @@ public class PlayerTest {
     }
 
     @Test
+    //V2
     // Test 2.3.1
     public void playerTypesHaveDifferentHealth() {
         Player player = Player.getInstance();
         player.setType("nerdy");
+        assertEquals(player.getType(),"nerdy");
+        
         player.respawn(Constant.ORIGIN, null);
         double nerdyHealth = player.getHealth();
         player.setType("sporty");
         player.respawn(Constant.ORIGIN, null);
         assertNotEquals("Sporty and nerdy students should have a different amount of hit points.",
                 nerdyHealth, player.getHealth(), 0.1);
+        player.setType("arty");
+        player.respawn(Constant.ORIGIN, null);
+        assertNotEquals("Sporty and nerdy students should have a different amount of hit points.",
+                nerdyHealth, player.getHealth(), 0.1);
     }
 
     @Test
+    //V2
     // Test 2.3.2
     public void playerTypesHaveDifferentSpeed() {
         Player player = Player.getInstance();
@@ -85,6 +97,25 @@ public class PlayerTest {
         player.respawn(Constant.ORIGIN, null);
         assertNotEquals("Sporty and nerdy students should have a different amount of hit points.",
                 nerdySpeed, player.speed);
+        player.setType("arty");
+        player.respawn(Constant.ORIGIN, null);
+        assertNotEquals("arty and nerdy students should have a different amount of hit points.",
+                nerdySpeed, player.speed);
+        
     }
+    @Test
+    ///V2 
+    //Test 2.4.1
+    public void playerPoints() {
+    	Player player = Player.getInstance();
+    	assertEquals(0,player.getPoints());
+    	player.addPoints(5);
+    	assertEquals(5,player.getPoints());
+    }
+    
+    
+   
+    
+    
 
 }

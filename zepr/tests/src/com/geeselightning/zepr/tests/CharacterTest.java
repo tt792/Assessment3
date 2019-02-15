@@ -91,6 +91,7 @@ public class CharacterTest {
         character.takeDamage(50);
         assertEquals("Character's health should be reduced by 50 when takeDamage(50).", originalHealth - 50,
                 character.getHealth(), 0.1);
+        
     }
 
     @Test

@@ -158,6 +158,8 @@ public class ZombieTest {
     	 assertNotEquals("Damage should be different", Constant.TANKDMG, Constant.FASTDMG);
     	 assertNotEquals("Damage should be different", Constant.ZOMBIEDMG, Constant.TANKDMG);
     }
+    
+    
 
 
 }

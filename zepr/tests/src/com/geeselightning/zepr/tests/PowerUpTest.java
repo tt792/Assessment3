@@ -1,6 +1,9 @@
 package com.geeselightning.zepr.tests;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.geeselightning.zepr.*;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
@@ -9,19 +12,7 @@ import static org.junit.Assert.*;
 @RunWith(GdxTestRunner.class)
 public class PowerUpTest {
 
-    @Test
-    // Test 4.1
-    public void powerUpHealthAddsHPToPlayer() {
-        Player player = Player.getInstance();
-        PowerUpHeal heal = new PowerUpHeal(null);
-        player.takeDamage(50);
-        double originalHealth = player.getHealth();
-        heal.activate();
-        heal.update(1);
-        assertEquals("Heal powerup should give the player more hit points.",
-                originalHealth + Constant.HEALUP, player.getHealth(), 0.1);
-    }
-
+    
     @Test
     // Test 4.2.1
     public void powerUpSpeedIncreasePlayersSpeed() {
@@ -129,4 +120,29 @@ public class PowerUpTest {
         assertEquals("Player should take 30 damage afrer immunity is deactivated.", originalHealth-30,
                 player.getHealth(), 0.1);
     }
+    @Test
+    //V2 Test
+    //Test 4.5.1
+    public void powerUpKnockBack() {
+    	Player player = Player.getInstance();
+    	PowerUpKnockback knockBack = new PowerUpKnockback(null);
+    	knockBack.activate();
+    	assertEquals(player.isKnockback, true);
+    	knockBack.deactivate();
+    	assertEquals(player.isKnockback, false);
+    }
+    @Test
+    //V2 Test
+    //Test 4.6.1
+    public void powerUpStrength() {
+    	Player player = Player.getInstance();    	
+    	PowerUpStrength Strength = new PowerUpStrength(null);    	
+    	Strength.activate();    	
+    	assertEquals(player.isStronk, true);
+    	Strength.deactivate();    	
+    	assertEquals(player.isStronk, false);
+    }
+   
+    
+    
 }
