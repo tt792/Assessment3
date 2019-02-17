@@ -9,7 +9,7 @@ public class TownLevel extends Level {
     private static final Vector2 powerSpawn = new Vector2(300, 300);
 
     // Defining the number of zombies to be spawned for each wave
-    private static final int[] waves = new int[]{0, 0, 1}; //{5, 10, 15};
+    private static final int[] waves = new int[]{5, 10, 15};
 
     public TownLevel(Zepr zepr) {
         super(zepr, mapLocation, playerSpawn, waves, powerSpawn);

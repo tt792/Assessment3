@@ -9,7 +9,7 @@ public class CourtyardLevel extends Level {
     private static final Vector2 powerSpawn = new Vector2(250, 250);
 
     // Defining the number of zombies to be spawned for each wave
-    private static final int[] waves = new int[]{0, 0, 1}; //{7, 12, 17};
+    private static final int[] waves = new int[]{7, 12, 17};
 
     public CourtyardLevel(Zepr zepr) {
         super(zepr, mapLocation, playerSpawn, waves, powerSpawn);
